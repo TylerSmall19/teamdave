@@ -40,19 +40,53 @@ main canvas{
 }
 
 
-/* Style the bottom of the page*/
+/* Container for bottom of the page */
 footer{
 	background: yellow;
 	width: 80%;
+	position: relative;
+	margin-top: 10px;
+	height: 150px;
 }
 
-footer p{
-	display: inline;
+/* Button Holder */
+footer span{
+	background: orange;
+	top: 0;
+	position: relative;
+	vertical-align: top;
+	display: block;
+}
+
+/* Text in Footer */
+footer span p{
+	display: inline-block;
+	vertical-align: top;
+	position: absolute;
+	top: 0;
+	margin: 0;
 	margin-left: 20%;
+}
+
+/* Buttons in footer button-holder */
+footer span button{
+	display: inline-block;
+	vertical-align: top;
+}
+
+/* Saved Comic Display Area */
+footer canvas{
+	height: 86%;
+	background: pink;
+	width: 100%;
 }
 
 
 /* BEGIN CLASS DECLARATIONS */
+
+button.delete-button{
+	color: red;
+}
 
 /* END CLASS DECLARATIONS*/
 
