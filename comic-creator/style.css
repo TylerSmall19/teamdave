@@ -1,0 +1,65 @@
+div.container{
+	min-width: 500px;
+	max-width: 960px;
+	background: red;
+	margin: auto;
+}
+
+
+/* Style for the main content of the page*/
+main{
+	width: 80%;
+	height: 550px;
+	background: blue;
+	margin-right: 5%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+main input{
+	height: 3%;
+	width: 35% ;
+	padding: 3px;
+	display: block;
+	text-align: center;
+}
+
+main input:focus{
+	text-align: left;
+}
+
+main canvas{
+	/* Fall-back value incase calc() is not supported */
+	width:99.8%; 
+	height: 95.4%;
+	/* Calculate the width and height with CSS math */
+	width: calc(100% - 2px); 
+	height: calc(100% - 3% - 10px);
+	background: green;
+	border: solid 1px gray;
+}
+
+
+/* Style the bottom of the page*/
+footer{
+	background: yellow;
+	width: 80%;
+}
+
+footer p{
+	display: inline;
+	margin-left: 20%;
+}
+
+
+/* BEGIN CLASS DECLARATIONS */
+
+/* END CLASS DECLARATIONS*/
+
+
+/* BEGIN ID DECLARATIONS */
+
+/* END ID DECLARATIONS */
+
+
+/* BEGIN MEDIA QUERIES */
