@@ -6,12 +6,43 @@
 	<script href="script.js"></script>
 </head>
 <body>
-	<div class="container">
-		<input id="title-input" name="title" value="Untitled" onfocus='value=""'>	
-		<canvas id="comic-canvas">
-			
-		</canvas>
 
-	</div>
+<!--
+	Project Outline
+	-Allow Users to create web comics by dragging and dropping images
+ -->
+
+	<div class="container">
+
+		<!-- Create main to hold main-content | TODO: Style with CSS-->
+		<main>
+
+			<!-- Input field for Comic Title -->
+			<input id="title-input" name="title" value="Untitled" onfocus='value=""' />	
+			<!-- Create a canvas for the main comic display -->
+			<canvas id="comic-canvas">
+			
+			</canvas>
+		</main>
+
+		<!-- Hold footer info inside footer tag | TODO: Style with CSS -->
+		<footer>
+
+			<!-- Add button holder and 4 buttons -->
+			<span class="button-holder">
+				<button name="save">Save</button>
+				<button name="share">Share</button>
+				<button name="edit">Edit</button>
+				<button name="delete">Delete</button>
+			</span>
+
+			<!-- Add paragraph to display a message above samed comics display -->
+			<p> Saved Comics </p>
+
+
+
+		</footer>
+
+	</div> <!-- END container div -->
 </body>
 </html>
