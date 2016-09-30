@@ -6,10 +6,69 @@
 	<script href="script.js"></script>
 </head>
 <body>
+
+<!--
+	Project Outline:
+	- Allow Users to create web comics by dragging and dropping images
+	- Visit https://github.com/TylerSmall19/teamdave/tree/master/comic-creator for details
+ -->
+
+ 	<!-- Container for document -->
 	<div class="container">
-		<section>
-			
-		</section>
-	</div>
+
+		<!-- Create main to hold main-content | TODO: Style with CSS-->
+		<main>
+
+			<!-- Input field for Comic Title -->
+			<input id="title-input" name="title" value="Untitled" onfocus='value=""' />	
+			<!-- Create a canvas for the main comic display -->
+			<canvas id="comic-canvas">
+			</canvas>
+
+		</main>
+
+		<!-- Hold footer info inside footer tag | TODO: Style with CSS -->
+		<footer>
+
+			<!-- Add button holder and 4 buttons -->
+			<span>
+				<button name="save">Save</button>
+				<button name="share">Share</button>
+				<button name="edit">Edit</button>
+				<!-- TODO: Change styling on delete-button for clarity -->
+				<button name="delete" class="delete-button">Delete</button>
+			</span>
+
+			<!-- Add paragraph to display a message above samed comics display -->
+			<p> Saved Comics </p>
+
+			<canvas id="saved-comic-canvas">
+			</canvas>
+
+		</footer>
+
+		<!-- Hold sidebar in an aside tag -->
+		<aside>
+
+			<!-- Drop down menu for image types to be displayed -->
+			<select id="image-type" name="image-type">
+				<option> All </option>
+				<option> Background </option>
+				<option> Characters </option>
+				<option> Items </option>
+				<option> Speech Bubbles </option>
+			</select>
+
+			<!-- Container for sidebar-canvas -->
+			<span>
+
+				<!-- Create Canvas for Sidebar display -->
+				<canvas id="sidebar-canvas">
+				</canvas>
+
+			</span>
+
+		</aside>
+	</div> <!-- END container div -->
 </body>
 </html>
