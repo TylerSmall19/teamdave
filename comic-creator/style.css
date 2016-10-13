@@ -1,17 +1,14 @@
-div.container{
-	min-width: 500px;
-	max-width: 960px;
-	background: red;
-	margin: auto;
+/* Reset default browser display settings*/
+body, main, footer, header, aside, div, button{
+	margin: 0;
 }
-
 
 /* Style for the main content of the page*/
 main{
 	width: 80%;
 	height: 550px;
 	background: blue;
-	margin-right: 5%;
+	/*margin-right: 5%;*/
 	display: inline-block;
 	vertical-align: top;
 }
@@ -39,14 +36,32 @@ main canvas{
 	border: solid 1px gray;
 }
 
+/* Side-bar */
+aside{
+	background: yellow;
+	display: inline-block;
+	width: 19%;
+	height: 692px;
+	float: right;
+	vertical-align: top;
+	margin-left: -4px;
+}
+
+/* Sidebar display canvas */
+aside canvas{
+	background:blue;
+	width: 100%;
+	height: 100%;
+}
 
 /* Container for bottom of the page */
 footer{
 	background: yellow;
 	width: 80%;
-	position: relative;
-	margin-top: 10px;
+	/*position: relative;*/
+	margin-top: 11px;
 	height: 150px;
+	display: inline-block;
 }
 
 /* Button Holder */
@@ -82,6 +97,7 @@ footer canvas{
 }
 
 
+
 /* BEGIN CLASS DECLARATIONS */
 
 button.delete-button{
@@ -95,5 +111,11 @@ button.delete-button{
 
 /* END ID DECLARATIONS */
 
+div.container{
+	min-width: 860px;
+	max-width: 960px;
+	background: red;
+	margin: auto;
+}
 
 /* BEGIN MEDIA QUERIES */
