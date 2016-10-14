@@ -7,7 +7,7 @@ body, main, footer, header, aside, div, button{
 main{
 	width: 80%;
 	height: 550px;
-	background: blue;
+	/*background: blue;*/
 	/*margin-right: 5%;*/
 	display: inline-block;
 	vertical-align: top;
@@ -32,39 +32,47 @@ main canvas{
 	/* Calculate the width and height with CSS math */
 	width: calc(100% - 2px); 
 	height: calc(100% - 3% - 10px);
+	border: solid 1px steelblue;
+	border-bottom: none;
+	margin-top: 7px;
 }
 
 /* Side-bar */
 aside{
-	background: yellow;
+	/*background: yellow;*/
 	display: inline-block;
 	width: 19%;
 	height: 692px;
 	float: right;
 	vertical-align: top;
 	margin-left: -4px;
+	padding-top: 7px;
 }
 
 /* Sidebar display canvas */
 aside canvas{
-	background:blue;
+	/*background:blue;*/
 	width: 100%;
 	height: 100%;
+	border: solid 1px steelblue;
+	margin-top: 7px;
 }
 
 /* Container for bottom of the page */
 footer{
-	background: yellow;
+	/*background: yellow;*/
 	width: 80%;
 	/*position: relative;*/
 	margin-top: 11px;
 	height: 150px;
 	display: inline-block;
+	border-top: dashed 1px steelblue;
+	padding-top: 7px;
 }
 
 /* Button Holder */
 footer span{
-	background: orange;
+	/*background: orange;*/
 	top: 0;
 	position: relative;
 	vertical-align: top;
@@ -89,9 +97,11 @@ footer span button{
 
 /* Saved Comic Display Area */
 footer canvas{
+	margin-top: 7px;
 	height: 86%;
-	background: pink;
 	width: 100%;
+	border: solid 1px steelblue;
+	border-top-style: dashed;
 }
 
 
@@ -107,13 +117,15 @@ button.delete-button{
 
 /* BEGIN ID DECLARATIONS */
 
-/* END ID DECLARATIONS */
-
 div.container{
 	min-width: 860px;
 	max-width: 960px;
-	background: red;
+	background: lightsteelblue;
 	margin: auto;
+	padding: 15px;
+	margin-top: 50px;
 }
+
+/* END ID DECLARATIONS */
 
 /* BEGIN MEDIA QUERIES */
