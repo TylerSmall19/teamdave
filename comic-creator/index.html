@@ -3,7 +3,7 @@
 <head>
 	<title>Comic Creator Alpha</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<script href="script.js"></script>
+
 </head>
 <body>
 
@@ -12,7 +12,7 @@
 	- Allow Users to create web comics by dragging and dropping images
 	- Visit https://github.com/TylerSmall19/teamdave/tree/master/comic-creator for details
  -->
-
+ 
  	<!-- Container for document -->
 	<div class="container">
 
@@ -23,7 +23,7 @@
 			<input id="title-input" name="title" value="Untitled" placeholder="Enter Title" onfocus='value=""' />
 
 			<!-- Create a canvas for the main comic display -->
-			<canvas id="comic-canvas">
+			<canvas id="comic-canvas" height="500" width="250">
 			</canvas>
 
 		</main>
@@ -50,7 +50,7 @@
 			</span>
 
 		</aside>
-		
+
 		<!-- Hold footer info inside footer tag -->
 		<footer>
 
@@ -74,5 +74,14 @@
 		</footer>
 
 	</div> <!-- END container div -->
+
+
+
+	
+
 </body>
 </html>
+
+<script src="jquery-3.1.1.min.js"></script>
+<script src="jcanvas.min.js"></script>
+<script src="script.js"></script>

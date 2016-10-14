@@ -32,8 +32,6 @@ main canvas{
 	/* Calculate the width and height with CSS math */
 	width: calc(100% - 2px); 
 	height: calc(100% - 3% - 10px);
-	background: green;
-	border: solid 1px gray;
 }
 
 /* Side-bar */
