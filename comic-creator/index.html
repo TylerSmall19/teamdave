@@ -3,7 +3,7 @@
 <head>
 	<title>Comic Creator Alpha</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<script href="script.js"></script>
+
 </head>
 <body>
 
@@ -12,7 +12,7 @@
 	- Allow Users to create web comics by dragging and dropping images
 	- Visit https://github.com/TylerSmall19/teamdave/tree/master/comic-creator for details
  -->
-
+ 
  	<!-- Container for document -->
 	<div class="container">
 
@@ -20,32 +20,13 @@
 		<main>
 
 			<!-- Input field for Comic Title -->
-			<input id="title-input" name="title" value="Untitled" onfocus='value=""' />	
+			<input id="title-input" name="title" value="Untitled" placeholder="Enter Title" onfocus='value=""' />
+
 			<!-- Create a canvas for the main comic display -->
-			<canvas id="comic-canvas">
+			<canvas id="comic-canvas" height="500" width="250">
 			</canvas>
 
 		</main>
-
-		<!-- Hold footer info inside footer tag | TODO: Style with CSS -->
-		<footer>
-
-			<!-- Add button holder and 4 buttons -->
-			<span>
-				<button name="save">Save</button>
-				<button name="share">Share</button>
-				<button name="edit">Edit</button>
-				<!-- TODO: Change styling on delete-button for clarity -->
-				<button name="delete" class="delete-button">Delete</button>
-			</span>
-
-			<!-- Add paragraph to display a message above samed comics display -->
-			<p> Saved Comics </p>
-
-			<canvas id="saved-comic-canvas">
-			</canvas>
-
-		</footer>
 
 		<!-- Hold sidebar in an aside tag -->
 		<aside>
@@ -69,6 +50,38 @@
 			</span>
 
 		</aside>
+
+		<!-- Hold footer info inside footer tag -->
+		<footer>
+
+			<!-- Add button holder and 4 buttons -->
+			<span>
+				<button name="save">Save</button>
+				<button name="share">Share</button>
+				<button name="edit">Edit</button>
+				<!-- TODO: Change styling on delete-button for clarity -->
+				<button name="delete" class="delete-button">Delete</button>
+				
+				<!-- Add paragraph to display a message above saved comics display -->
+				<p> Saved Comics </p>
+			</span>
+
+			
+
+			<canvas id="saved-comic-canvas">
+			</canvas>
+
+		</footer>
+
 	</div> <!-- END container div -->
+
+
+
+	
+
 </body>
 </html>
+
+<script src="jquery-3.1.1.min.js"></script>
+<script src="jcanvas.min.js"></script>
+<script src="script.js"></script>
