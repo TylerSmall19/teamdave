@@ -118,7 +118,7 @@ button.delete-button{
 /* BEGIN ID DECLARATIONS */
 
 div.container{
-	min-width: 860px;
+	min-width: 960px;
 	max-width: 960px;
 	background: lightsteelblue;
 	margin: auto;
