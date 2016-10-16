@@ -1,11 +1,10 @@
-// var $comicCanvas = $('#comic-canvas');
+var $comicCanvas = $('#comic-canvas');
 
-// $comicCanvas.drawRect({
-//   fillStyle: 'steelblue',
-//   strokeStyle: 'blue',
-//   strokeWidth: 1,
-//   x: 0, y: 0,
-//   fromCenter: false,
-//   width: 100,
-//   height: 50
-// });
+// Draw an image to test fuinctionality of JCanvas
+$comicCanvas.drawImage({
+	source: "img/test-bg.jpg",
+	x: 0, y: 0,
+	width: 766, 
+	height: 523.5,
+	fromCenter: false
+});
