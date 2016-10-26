@@ -6,7 +6,7 @@ body, main, footer, header, aside, div, button{
 /* Style for the main content of the page*/
 main{
 	width: 80%;
-	height: 550px;
+	height: 575px;
 	/*background: blue;*/
 	/*margin-right: 5%;*/
 	display: inline-block;
@@ -29,6 +29,7 @@ main canvas{
 	border: solid 1px steelblue;
 	border-bottom: none;
 	margin-top: 7px;
+	/*background: yellow;*/
 }
 
 /* Side-bar */
@@ -55,11 +56,13 @@ footer{
 	/*background: yellow;*/
 	width: 80%;
 	/*position: relative;*/
-	margin-top: 11px;
+	margin-top: 50px;
 	height: 150px;
-	display: inline-block;
+	display: block;
 	border-top: dashed 1px steelblue;
 	padding-top: 7px;
+	/*background: blue;*/
+	z-index: 5;
 }
 
 /* Button Holder */
