@@ -9,7 +9,11 @@ var src = ['img/bg1.png', 'img/bg2.png', 'img/bg3.jpg'];
 
 function findPos(imgNum, size, padding){
 	var pos;
-	pos = imgNum * size + padding;
+	if (imgNum == 0){
+		pos = padding;
+	}else{
+		pos = (imgNum) * (size + padding) + padding;
+	}
 	return pos;
 }
 
@@ -20,8 +24,8 @@ for (x = 0; x < src.length; x++){
 		type: 'image',
 		name: name,
 		source: src[x],
-		x: findPos(x, 55, 3), y: 3,
-		height: 55, width: 55,
+		x: findPos(x, 56, 3), y: 3,
+		height: 56, width: 56,
 		click: function(layer){
 			$comicCanvas.addLayer({
 				type:'image',
