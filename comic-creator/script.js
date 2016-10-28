@@ -43,7 +43,7 @@ function addLayer(src, x, y) {
 		x = 0;
 		y = 0;
 		// Undraggable...
-		draggable = true;
+		draggable = false;
 		hasBackground = true;
 		// And replace the previous background if already drawn
 		if (hasBackground) {
@@ -60,7 +60,16 @@ function addLayer(src, x, y) {
 		source: src,
 		x: x, y: y,
 		draggable: draggable,
-		index: index
+		index: index,
+		// When mouse is over, move to half transparency if not background
+		mousedown: function(layer){
+			if(!layer.source.includes('background')){
+				layer.opacity = 0.8;
+			}
+		},
+		mouseup: function(layer){
+			layer.opacity = 1;
+		}
 	}).drawLayers();
 }
 
