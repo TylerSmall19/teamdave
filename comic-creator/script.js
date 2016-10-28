@@ -43,16 +43,17 @@ function addLayer(src, x, y) {
 		x = 0;
 		y = 0;
 		// Undraggable...
-		draggable = true;
-		hasBackground = true;
+		draggable = false;
 		// And replace the previous background if already drawn
 		if (hasBackground) {
 			$comicCanvas.removeLayer(0);
 			index = 0; 
 		}
+		hasBackground = true;
 	} else {
 		draggable = true
-		index = null;
+		index = 1 + $comicCanvas.getLayers().length;
+		console.log(index);
 	};
 
 	$comicCanvas.addLayer({
@@ -60,7 +61,22 @@ function addLayer(src, x, y) {
 		source: src,
 		x: x, y: y,
 		draggable: draggable,
-		index: index
+		index: index,
+		sel: false,
+		// When selected, move to .6 opaque
+		dblclick: function(layer){
+			if(layer.sel == false){
+				layer.sel = true;
+			}else{
+				layer.sel = false;
+			}
+			if (layer.sel){
+				layer.opacity = 0.6;
+			}else{
+				layer.opacity = 1;
+			}
+			console.log(layer.sel);
+		}
 	}).drawLayers();
 }
 
