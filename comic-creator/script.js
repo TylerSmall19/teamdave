@@ -47,8 +47,9 @@ $('#images').on('click', 'img', function() {
 });
 
 function addLayer(src, x, y) {
-	var index, draggable;
+	var index, draggable, isBackground;
 	if (src.includes('backgrounds')) {
+		isBackground = true;
 		// Backgrounds are centered in canvas...
 		x = 0;
 		y = 0;
@@ -61,6 +62,7 @@ function addLayer(src, x, y) {
 		}
 		hasBackground = true;
 	} else {
+		isBackground = false;
 		draggable = true
 		index = 1 + $comicCanvas.getLayers().length;
 	};
@@ -72,6 +74,7 @@ function addLayer(src, x, y) {
 		draggable: draggable,
 		index: index,
 		sel: true,
+		isBackground: isBackground,
 		// When sedlected, move to .6 opaque
 		dblclick: function(layer){
 			selectLayer(layer);
@@ -81,8 +84,10 @@ function addLayer(src, x, y) {
 	// Get layer we just added and select it
 	var length = $comicCanvas.getLayers().length;
 	var layer = $comicCanvas.getLayers()[length - 1];
-	selectLayer(layer);
 
+	// If it's a background, it's not automatically selected
+	if (layer.isBackground == false) { selectLayer(layer); };
+	
 	$comicCanvas.drawLayers();
 };
 
@@ -98,3 +103,6 @@ function selectLayer(layer) {
 	selectedIndex = layer.index;
 	console.log(selectedIndex);
 }
+
+
+
