@@ -1,40 +1,43 @@
 $.jCanvas.defaults.fromCenter = false;
 var $comicCanvas = $('#comic-canvas'); // <canvas id="comic-canvas" height="590" width="767">
-var $sideCanvas = $('#sidebar-canvas'); // <canvas id="sidebar-canvas" width="180" height="742">
 var $savedComicCanvas = $('#saved-comic-canvas'); //<canvas id="saved-comic-canvas" width="767" height="129">
-var sideCanvasArray = [];
-var hasBackground = false;
-var src = ['img/bg1.png', 'img/bg2.png', 'img/bg3.jpg'];
+var $stickFigure = $('#stick-figure');
 
+$(document).on('dragstart', function(e) {
+	var target = e.target;
+	if (target.className.includes('draggable') == false) {return};
+	e.dataTransfer = e.originalEvent.dataTransfer;
+	e.dataTransfer.setData('text/plain', target.src);
+});
 
-function findPos(imgNum, size, padding){
-	var pos;
-	if (imgNum == 0){
-		pos = padding;
-	}else{
-		pos = (imgNum) * (size + padding) + padding;
-	}
-	return pos;
-}
+$comicCanvas.on('dragover', function(e) {
+	e.preventDefault();
+	e.dataTransfer = e.originalEvent.dataTransfer;
+	e.dataTransfer.dropEffect = 'move';
+})
 
-for (x = 0; x < src.length; x++){
-	var y = x;
-	var name = 'bg'+x;
-	$sideCanvas.addLayer({
+$comicCanvas.on('drop', function(e) {
+	e.preventDefault();
+	e.dataTransfer = e.originalEvent.dataTransfer;
+	var data = e.dataTransfer.getData('text');
+	console.log(data);
+	var x = e.pageX - $comicCanvas.offset().left;
+	var y = e.pageY - $comicCanvas.offset().top;
+	addLayer(data, x, y);
+});
+
+function addLayer(src, x, y) {
+	if (src.includes('backgrounds')) {
+		x = 0;
+		y = 0;
+		var draggable = false;
+	} 
+	else {var draggable = true};
+
+	$comicCanvas.addLayer({
 		type: 'image',
-		name: name,
-		source: src[x],
-		x: findPos(x, 56, 3), y: 3,
-		height: 56, width: 56,
-		click: function(layer){
-			$comicCanvas.addLayer({
-				type:'image',
-				source: layer.source,
-				x: 0, y: 0,
-				draggable: false
-			}).drawLayers();
-		}
-	})
-	$sideCanvas.addLayerToGroup(name, 'backgrounds')
+		source: src,
+		x: x, y: y,
+		draggable: true
+	}).drawLayers();
 }
-$sideCanvas.drawLayers();
