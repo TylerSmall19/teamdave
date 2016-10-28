@@ -1,7 +1,7 @@
 $.jCanvas.defaults.fromCenter = false;
 var $comicCanvas = $('#comic-canvas'); // <canvas id="comic-canvas" height="590" width="767">
 var $savedComicCanvas = $('#saved-comic-canvas'); //<canvas id="saved-comic-canvas" width="767" height="129">
-var $stickFigure = $('#stick-figure');
+var hasBackground = false;
 
 $(document).on('dragstart', function(e) {
 	var target = e.target;
@@ -31,7 +31,8 @@ function addLayer(src, x, y) {
 		x = 0;
 		y = 0;
 		var draggable = false;
-		var index = 0;
+		var index = (hasBackground ? null : 0);
+		hasBackground = true;
 	} else {
 		var draggable = true
 		var index = null;
