@@ -43,7 +43,7 @@ function addLayer(src, x, y) {
 		y = 0;
 		// Undraggable...
 		draggable = false;
-		// And have an index of 0 if no background is already drawn, else 1
+		// And replace the previous background if already drawn
 		if (hasBackground) {$comicCanvas.getLayers().shift()};
 		index = 0;
 		hasBackground = true;
