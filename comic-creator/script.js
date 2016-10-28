@@ -2,6 +2,7 @@ $.jCanvas.defaults.fromCenter = false;
 var $comicCanvas = $('#comic-canvas'); // <canvas id="comic-canvas" height="590" width="767">
 var $savedComicCanvas = $('#saved-comic-canvas'); //<canvas id="saved-comic-canvas" width="767" height="129">
 var hasBackground = false;
+var selectedIndex;
 
 $(document).on('dragstart', function(e) {
 	var target = e.target;
@@ -53,7 +54,6 @@ function addLayer(src, x, y) {
 	} else {
 		draggable = true
 		index = 1 + $comicCanvas.getLayers().length;
-		console.log(index);
 	};
 
 	$comicCanvas.addLayer({
@@ -62,17 +62,19 @@ function addLayer(src, x, y) {
 		x: x, y: y,
 		draggable: draggable,
 		index: index,
-		sel: false,
+		sel: true,
 		// When selected, move to .6 opaque
 		dblclick: function(layer){
-			if(layer.sel == false){
-				layer.sel = true;
-				layer.opacity = 0.6;
-			}else{
-				layer.sel = false;
-				layer.opacity = 1;
+			var layers = $comicCanvas.getLayers();
+			for (var i=0; i<layers.length; i++) {
+				var l = layers[i];
+				l.sel = false;
+				l.opacity = 1;
 			}
-			console.log(layer.sel);
+			layer.sel = true;
+			layer.opacity = 0.6;
+			selectedIndex = layer.index;
+			console.log(selectedIndex);
 		}
 	}).drawLayers();
 }
