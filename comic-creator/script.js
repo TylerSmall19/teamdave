@@ -8,6 +8,7 @@ $(document).on('dragstart', function(e) {
 	if (target.className.includes('draggable') == false) {return};
 	e.dataTransfer = e.originalEvent.dataTransfer;
 	e.dataTransfer.setData('text/plain', target.src);
+	// e.name = "Image";
 	if (target.src.includes("backgrounds")) {return};
 	var img = new Image();
 	img.src = target.src;
@@ -42,17 +43,17 @@ function addLayer(src, x, y) {
 		x = 0;
 		y = 0;
 		// Undraggable...
-		draggable = false;
-		// And replace the previous background if already drawn
-		if (hasBackground) {$comicCanvas.getLayers().shift()};
-		index = 0;
+		draggable = true;
 		hasBackground = true;
+		// And replace the previous background if already drawn
+		if (hasBackground) {
+			$comicCanvas.removeLayer(0);
+			index = 0; 
+		}
 	} else {
 		draggable = true
 		index = null;
 	};
-
-	
 
 	$comicCanvas.addLayer({
 		type: 'image',
@@ -62,4 +63,13 @@ function addLayer(src, x, y) {
 		index: index
 	}).drawLayers();
 }
+
+$('#images').on('click', 'img', function() {
+	if(hasBackground){
+		var x = ($comicCanvas.getLayers().length - 1) * 100;
+	}else{
+		var x = $comicCanvas.getLayers().length * 100;
+	}
+	addLayer(this.src, x, 0);
+})
 
