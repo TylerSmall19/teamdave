@@ -14,7 +14,7 @@ $comicCanvas.on('dragover', function(e) {
 	e.preventDefault();
 	e.dataTransfer = e.originalEvent.dataTransfer;
 	e.dataTransfer.dropEffect = 'move';
-})
+});
 
 $comicCanvas.on('drop', function(e) {
 	e.preventDefault();
@@ -31,13 +31,17 @@ function addLayer(src, x, y) {
 		x = 0;
 		y = 0;
 		var draggable = false;
-	} 
-	else {var draggable = true};
+		var index = 0;
+	} else {
+		var draggable = true
+		var index = null;
+	};
 
 	$comicCanvas.addLayer({
 		type: 'image',
 		source: src,
 		x: x, y: y,
-		draggable: true
+		draggable: true,
+		index: index
 	}).drawLayers();
 }
