@@ -36,25 +36,30 @@ $comicCanvas.on('drop', function(e) {
 });
 
 function addLayer(src, x, y) {
+	var index, draggable;
 	if (src.includes('backgrounds')) {
 		// Backgrounds are centered in canvas...
 		x = 0;
 		y = 0;
 		// Undraggable...
-		var draggable = false;
-		// And have an index of 0 if no background is already drawn
-		var index = (hasBackground ? null : 0);
+		draggable = false;
+		// And have an index of 0 if no background is already drawn, else 1
+		if (hasBackground) {$comicCanvas.getLayers().shift()};
+		index = 0;
 		hasBackground = true;
 	} else {
-		var draggable = true
-		var index = null;
+		draggable = true
+		index = null;
 	};
+
+	
 
 	$comicCanvas.addLayer({
 		type: 'image',
 		source: src,
 		x: x, y: y,
-		draggable: true,
+		draggable: draggable,
 		index: index
 	}).drawLayers();
 }
+
