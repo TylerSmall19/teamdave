@@ -37,6 +37,15 @@ $comicCanvas.on('drop', function(e) {
 	addLayer(src, x, y);
 });
 
+$('#images').on('click', 'img', function() {
+	if(hasBackground){
+		var x = ($comicCanvas.getLayers().length - 1) * 100;
+	}else{
+		var x = $comicCanvas.getLayers().length * 100;
+	}
+	addLayer(this.src, x, 0);
+});
+
 function addLayer(src, x, y) {
 	var index, draggable;
 	if (src.includes('backgrounds')) {
@@ -63,28 +72,29 @@ function addLayer(src, x, y) {
 		draggable: draggable,
 		index: index,
 		sel: true,
-		// When selected, move to .6 opaque
+		// When sedlected, move to .6 opaque
 		dblclick: function(layer){
-			var layers = $comicCanvas.getLayers();
-			for (var i=0; i<layers.length; i++) {
-				var l = layers[i];
-				l.sel = false;
-				l.opacity = 1;
-			}
-			layer.sel = true;
-			layer.opacity = 0.6;
-			selectedIndex = layer.index;
-			console.log(selectedIndex);
+			selectLayer(layer);
 		}
-	}).drawLayers();
-}
+	});
 
-$('#images').on('click', 'img', function() {
-	if(hasBackground){
-		var x = ($comicCanvas.getLayers().length - 1) * 100;
-	}else{
-		var x = $comicCanvas.getLayers().length * 100;
+	// Get layer we just added and select it
+	var length = $comicCanvas.getLayers().length;
+	var layer = $comicCanvas.getLayers()[length - 1];
+	selectLayer(layer);
+
+	$comicCanvas.drawLayers();
+};
+
+function selectLayer(layer) {
+	var layers = $comicCanvas.getLayers();
+	for (var i=0; i<layers.length; i++) {
+		var l = layers[i];
+		l.sel = false;
+		l.opacity = 1;
 	}
-	addLayer(this.src, x, 0);
-})
-
+	layer.sel = true;
+	layer.opacity = 0.6;
+	selectedIndex = layer.index;
+	console.log(selectedIndex);
+}
