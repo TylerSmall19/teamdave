@@ -1,40 +1,75 @@
 $.jCanvas.defaults.fromCenter = false;
 var $comicCanvas = $('#comic-canvas'); // <canvas id="comic-canvas" height="590" width="767">
-var $sideCanvas = $('#sidebar-canvas'); // <canvas id="sidebar-canvas" width="180" height="742">
 var $savedComicCanvas = $('#saved-comic-canvas'); //<canvas id="saved-comic-canvas" width="767" height="129">
-var sideCanvasArray = [];
 var hasBackground = false;
-var src = ['img/bg1.png', 'img/bg2.png', 'img/bg3.jpg'];
 
+$(document).on('dragstart', function(e) {
+	var target = e.target;
+	if (target.className.includes('draggable') == false) {return};
+	e.dataTransfer = e.originalEvent.dataTransfer;
+	e.dataTransfer.setData('text/plain', target.src);
+	// e.name = "Image";
+	if (target.src.includes("backgrounds")) {return};
+	var img = new Image();
+	img.src = target.src;
+	e.dataTransfer.setDragImage(img, img.width/2, img.height/2);
+});
 
-function findPos(imgNum, size, padding){
-	var pos;
-	if (imgNum == 0){
-		pos = padding;
-	}else{
-		pos = (imgNum) * (size + padding) + padding;
-	}
-	return pos;
-}
+$comicCanvas.on('dragover', function(e) {
+	e.preventDefault();
+	e.dataTransfer = e.originalEvent.dataTransfer;
+	e.dataTransfer.dropEffect = 'move';
+});
 
-for (x = 0; x < src.length; x++){
-	var y = x;
-	var name = 'bg'+x;
-	$sideCanvas.addLayer({
-		type: 'image',
-		name: name,
-		source: src[x],
-		x: findPos(x, 56, 3), y: 3,
-		height: 56, width: 56,
-		click: function(layer){
-			$comicCanvas.addLayer({
-				type:'image',
-				source: layer.source,
-				x: 0, y: 0,
-				draggable: false
-			}).drawLayers();
+$comicCanvas.on('drop', function(e) {
+	e.preventDefault();
+	e.dataTransfer = e.originalEvent.dataTransfer;
+	var src = e.dataTransfer.getData('text');
+	
+	// Find image size
+	var img = new Image();
+	img.src = src;
+
+	// Use image size to draw on canvas right where you drop it.
+	var x = e.pageX - $comicCanvas.offset().left - img.width/2;
+	var y = e.pageY - $comicCanvas.offset().top - img.height/2;
+	addLayer(src, x, y);
+});
+
+function addLayer(src, x, y) {
+	var index, draggable;
+	if (src.includes('backgrounds')) {
+		// Backgrounds are centered in canvas...
+		x = 0;
+		y = 0;
+		// Undraggable...
+		draggable = true;
+		hasBackground = true;
+		// And replace the previous background if already drawn
+		if (hasBackground) {
+			$comicCanvas.removeLayer(0);
+			index = 0; 
 		}
-	})
-	$sideCanvas.addLayerToGroup(name, 'backgrounds')
+	} else {
+		draggable = true
+		index = null;
+	};
+
+	$comicCanvas.addLayer({
+		type: 'image',
+		source: src,
+		x: x, y: y,
+		draggable: draggable,
+		index: index
+	}).drawLayers();
 }
-$sideCanvas.drawLayers();
+
+$('#images').on('click', 'img', function() {
+	if(hasBackground){
+		var x = ($comicCanvas.getLayers().length - 1) * 100;
+	}else{
+		var x = $comicCanvas.getLayers().length * 100;
+	}
+	addLayer(this.src, x, 0);
+})
+

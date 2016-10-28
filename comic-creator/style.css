@@ -45,7 +45,7 @@ aside{
 }
 
 /* Sidebar display canvas */
-aside canvas{
+aside div {
 	/*background:blue;*/
 	border: solid 1px steelblue;
 	margin-top: 7px;
