@@ -47,14 +47,12 @@ $('#images').on('click', 'img', function() {
 });
 
 function addLayer(src, x, y) {
-	var index, draggable, isBackground;
+	var index, isBackground;
 	if (src.includes('backgrounds')) {
 		isBackground = true;
 		// Backgrounds are centered in canvas...
 		x = 0;
 		y = 0;
-		// Undraggable...
-		draggable = false;
 		// And replace the previous background if already drawn
 		if (hasBackground) {
 			$comicCanvas.removeLayer(0);
@@ -63,7 +61,6 @@ function addLayer(src, x, y) {
 		hasBackground = true;
 	} else {
 		isBackground = false;
-		draggable = true
 		index = 1 + $comicCanvas.getLayers().length;
 	};
 
@@ -71,7 +68,7 @@ function addLayer(src, x, y) {
 		type: 'image',
 		source: src,
 		x: x, y: y,
-		draggable: draggable,
+		draggable: false,
 		index: index,
 		sel: true,
 		isBackground: isBackground,
@@ -86,7 +83,7 @@ function addLayer(src, x, y) {
 	var layer = $comicCanvas.getLayers()[length - 1];
 
 	// If it's a background, it's not automatically selected
-	if (layer.isBackground == false) { selectLayer(layer); };
+	if (!layer.isBackground) { selectLayer(layer); };
 	
 	$comicCanvas.drawLayers();
 };
@@ -96,12 +93,15 @@ function selectLayer(layer) {
 	for (var i=0; i<layers.length; i++) {
 		var l = layers[i];
 		l.sel = false;
+		l.draggable = false;
 		l.opacity = 1;
 	}
 	layer.sel = true;
+	$comicCanvas.setLayer(layer, { draggable: true });
+	console.log(layer);
 	layer.opacity = 0.6;
 	selectedIndex = layer.index;
-	console.log(selectedIndex);
+	$comicCanvas.drawLayers();
 }
 
 
