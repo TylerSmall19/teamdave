@@ -23,11 +23,13 @@ $comicCanvas.on('dragover', function(e) {
 $comicCanvas.on('drop', function(e) {
 	e.preventDefault();
 	e.dataTransfer = e.originalEvent.dataTransfer;
-	var data = e.dataTransfer.getData('text');
-	console.log(data);
+	var src = e.dataTransfer.getData('text');
+	
 	// Find image size
 	var img = new Image();
-	img.src = data;
+	img.src = src;
+
+	// Use image size to draw on canvas right where you drop it.
 	var x = e.pageX - $comicCanvas.offset().left - img.width/2;
 	var y = e.pageY - $comicCanvas.offset().top - img.height/2;
 	addLayer(data, x, y);
@@ -35,9 +37,12 @@ $comicCanvas.on('drop', function(e) {
 
 function addLayer(src, x, y) {
 	if (src.includes('backgrounds')) {
+		// Backgrounds are centered in canvas...
 		x = 0;
 		y = 0;
+		// Undraggable...
 		var draggable = false;
+		// And have an index of 0 if no background is already drawn
 		var index = (hasBackground ? null : 0);
 		hasBackground = true;
 	} else {
