@@ -32,7 +32,7 @@ $comicCanvas.on('drop', function(e) {
 	// Use image size to draw on canvas right where you drop it.
 	var x = e.pageX - $comicCanvas.offset().left - img.width/2;
 	var y = e.pageY - $comicCanvas.offset().top - img.height/2;
-	addLayer(data, x, y);
+	addLayer(src, x, y);
 });
 
 function addLayer(src, x, y) {
