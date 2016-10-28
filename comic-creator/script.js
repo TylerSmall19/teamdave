@@ -67,12 +67,9 @@ function addLayer(src, x, y) {
 		dblclick: function(layer){
 			if(layer.sel == false){
 				layer.sel = true;
-			}else{
-				layer.sel = false;
-			}
-			if (layer.sel){
 				layer.opacity = 0.6;
 			}else{
+				layer.sel = false;
 				layer.opacity = 1;
 			}
 			console.log(layer.sel);
