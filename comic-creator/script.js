@@ -110,18 +110,20 @@ function selectLayer(layer) {
 
 function deSelectLayers() {
 	var layers = $comicCanvas.getLayers();
-	for (var i=0; i<layers.length; i++) {
+	for (var i=0; i < layers.length; i++) {
 		var layer = layers[i];
 		layer.sel = false;
 		layer.draggable = false;
 		layer.opacity = 1;
+		selectedIndex = null;
 		$comicCanvas.drawLayers();
 	}
 }
 
 function deleteSelectedLayer() {
 	var layer = $comicCanvas.getLayer(selectedIndex);
-	$comicCanvas.removeLayer(layer);
-	$comicCanvas.drawLayers();
+	console.log(layer);
+	$comicCanvas.removeLayer(layer)
+	.drawLayers();
 }
 
