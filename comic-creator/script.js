@@ -2,7 +2,7 @@ $.jCanvas.defaults.fromCenter = false;
 var $comicCanvas = $('#comic-canvas'); // <canvas id="comic-canvas" height="590" width="767">
 var $savedComicCanvas = $('#saved-comic-canvas'); //<canvas id="saved-comic-canvas" width="767" height="129">
 var hasBackground = false;
-var selectedIndex;
+// var selectedIndex;
 
 // EVENT HANDLERS
 $(document).on('dragstart', function(e) {
@@ -41,7 +41,7 @@ $('#images').on('click', 'img', function() {
 	if(hasBackground){
 		var x = ($comicCanvas.getLayers().length - 1) * 100;
 	}else{
-		var x = $comicCanvas.getLayers().length * 100;
+		var x = $comicCanvas.getLayers().length * 100; //TODO Change this line to bound the x, y and keep the image on screen by default
 	}
 	addLayer(this.src, x, 0);
 });
@@ -58,6 +58,7 @@ $('#delete-button').on('click', function(e) {
 
 function addLayer(src, x, y) {
 	var index, isBackground;
+	console.log(src.includes('backgrounds'));
 	if (src.includes('backgrounds')) {
 		isBackground = true;
 		// Backgrounds are centered in canvas...
@@ -80,7 +81,7 @@ function addLayer(src, x, y) {
 		x: x, y: y,
 		draggable: false,
 		index: index,
-		sel: true,
+		// sel: true,
 		isBackground: isBackground,
 		// When selected, change to .6 opaque
 		click: function(layer){
@@ -88,6 +89,7 @@ function addLayer(src, x, y) {
 		}
 	});
 
+	// TODO: Refactor to prevent issues with unwanted selection -- see 'Issues' in Git Hub Repo.
 	// Get layer we just added and select it
 	var length = $comicCanvas.getLayers().length;
 	var layer = $comicCanvas.getLayers()[length - 1];
@@ -98,8 +100,9 @@ function addLayer(src, x, y) {
 
 function selectLayer(layer) {
 	// Backgrounds aren't selectable
+	// console.log(layer.isBackground);
 	if (layer.isBackground) {return}; 
-	deSelectLayers(); // What is the usage of this line?
+	// deSelectLayers();
 	// layer.sel = true; // No longer needed. After testing, safe to remove.
 	layer.opacity = 0.6;
 	// selectedIndex = layer.index; // No longer needed. After testing, remove this line.
@@ -108,25 +111,28 @@ function selectLayer(layer) {
 	.addLayerToGroup(layer, 'selected')
 	// JCanvas alows chaining for funcitons with the same canvas root (same as $comicCanvas.drawLayers() when used after above lines)
 	.drawLayers();
-	console.log($comicCanvas.getLayerGroup('selected'));
+	// console.log($comicCanvas.getLayerGroup('selected'));
 }
 
 function deSelectLayers() {
 	var layers = $comicCanvas.getLayers();
+	$comicCanvas.setLayerGroup('selected', {
+		opacity: 1,
+		draggable: false
+	})
 	for (var i=0; i < layers.length; i++) {
 		var layer = layers[i];
-		layer.sel = false;
-		layer.draggable = false;
-		layer.opacity = 1;
-		selectedIndex = null;
-		$comicCanvas.drawLayers();
+		// layer.sel = false;
+		// layer.draggable = false;
+		// layer.opacity = 1;
+		// selectedIndex = null;
+		$comicCanvas.removeLayerFromGroup(layer, 'selected')
+		.drawLayers();
 	}
 }
 
 function deleteSelectedLayer() {
-	// var layer = $comicCanvas.getLayer(selectedIndex);
-	// $comicCanvas.removeLayer(layer)
-	// console.log($comicCanvas.getLayerGroup('selected'));
+	//Removes all layers from the 'selected' group and redraws layers
 	$comicCanvas.removeLayerGroup('selected')
 	.drawLayers();
 }
