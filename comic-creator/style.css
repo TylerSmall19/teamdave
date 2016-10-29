@@ -97,13 +97,7 @@ footer canvas{
 	border-top-style: dashed;
 }
 
-
-
 /* BEGIN CLASS DECLARATIONS */
-
-button.delete-button{
-	color: red;
-}
 
 div.container{
 	min-width: 960px;
@@ -117,6 +111,10 @@ div.container{
 /* END CLASS DECLARATIONS*/
 
 /* BEGIN ID DECLARATIONS */
+
+#delete-button{
+	color: red;
+}
 
 /* END ID DECLARATIONS */
 
