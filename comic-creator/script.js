@@ -82,7 +82,7 @@ function addLayer(src, x, y) {
 		index: index,
 		sel: true,
 		isBackground: isBackground,
-		// When sedlected, move to .6 opaque
+		// When selected, change to .6 opaque
 		click: function(layer){
 			selectLayer(layer);
 		}
@@ -91,20 +91,24 @@ function addLayer(src, x, y) {
 	// Get layer we just added and select it
 	var length = $comicCanvas.getLayers().length;
 	var layer = $comicCanvas.getLayers()[length - 1];
-	selectLayer(layer);	
+	selectLayer(layer);
 
 	$comicCanvas.drawLayers();
 };
 
 function selectLayer(layer) {
 	// Backgrounds aren't selectable
-	if (layer.isBackground) {return};
-	deSelectLayers();
-	layer.sel = true;
-	$comicCanvas.setLayer(layer, { draggable: true });
+	if (layer.isBackground) {return}; 
+	deSelectLayers(); // What is the usage of this line?
+	// layer.sel = true; // No longer needed. After testing, safe to remove.
 	layer.opacity = 0.6;
-	selectedIndex = layer.index;
-	$comicCanvas.drawLayers();
+	// selectedIndex = layer.index; // No longer needed. After testing, remove this line.
+	$comicCanvas.setLayer(layer, { draggable: true })
+	// Uses built in JCanvas functionality to track the selected images
+	.addLayerToGroup(layer, 'selected')
+	// JCanvas alows chaining for funcitons with the same canvas root (same as $comicCanvas.drawLayers() when used after above lines)
+	.drawLayers();
+	console.log($comicCanvas.getLayerGroup('selected'));
 }
 
 function deSelectLayers() {
@@ -120,8 +124,10 @@ function deSelectLayers() {
 }
 
 function deleteSelectedLayer() {
-	var layer = $comicCanvas.getLayer(selectedIndex);
-	$comicCanvas.removeLayer(layer)
+	// var layer = $comicCanvas.getLayer(selectedIndex);
+	// $comicCanvas.removeLayer(layer)
+	// console.log($comicCanvas.getLayerGroup('selected'));
+	$comicCanvas.removeLayerGroup('selected')
 	.drawLayers();
 }
 
