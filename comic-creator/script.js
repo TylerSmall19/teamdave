@@ -84,7 +84,7 @@ function addLayer(src, x, y) {
 		sel: true,
 		isBackground: isBackground,
 		// When sedlected, move to .6 opaque
-		dblclick: function(layer){
+		click: function(layer){
 			selectLayer(layer);
 		}
 	});
