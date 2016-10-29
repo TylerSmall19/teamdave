@@ -117,6 +117,7 @@ function selectLayer(layer) {
 	$comicCanvas.setLayer(layer, { draggable: true })
 	// Uses built in JCanvas functionality to track the selected images
 	.addLayerToGroup(layer, 'selected');
+	$comicCanvas.drawLayers();
 }
 
 function deSelectLayers() {
@@ -132,6 +133,7 @@ function deSelectLayers() {
 		var layer = layers[i];
 		$comicCanvas.removeLayerFromGroup(layer, 'selected');
 	}
+	$comicCanvas.drawLayers();
 }
 
 function deleteSelectedLayers() {
