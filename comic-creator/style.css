@@ -105,11 +105,6 @@ button.delete-button{
 	color: red;
 }
 
-/* END CLASS DECLARATIONS*/
-
-
-/* BEGIN ID DECLARATIONS */
-
 div.container{
 	min-width: 960px;
 	max-width: 960px;
@@ -118,6 +113,10 @@ div.container{
 	padding: 15px;
 	margin-top: 50px;
 }
+
+/* END CLASS DECLARATIONS*/
+
+/* BEGIN ID DECLARATIONS */
 
 /* END ID DECLARATIONS */
 
