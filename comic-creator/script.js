@@ -46,9 +46,9 @@ $('#images').on('click', 'img', function() {
 	addLayer(this.src, x, 0);
 });
 
-$comicCanvas.on('click', function(e) {
-	deSelectLayers();
-});
+// $comicCanvas.on('click', function(e) {
+// 	deSelectLayers();
+// });
 
 $('#delete-button').on('click', function(e) {
 	deleteSelectedLayer();
@@ -85,7 +85,13 @@ function addLayer(src, x, y) {
 		isBackground: isBackground,
 		// When selected, change to .6 opaque
 		click: function(layer){
-			selectLayer(layer);
+			// Deselect when background image is clicked
+			if(isBackground){
+				deSelectLayers();
+			// Otherwise, select clicked layer
+			}else{
+				selectLayer(layer);
+			}
 		}
 	});
 
@@ -100,7 +106,6 @@ function addLayer(src, x, y) {
 
 function selectLayer(layer) {
 	// Backgrounds aren't selectable
-	// console.log(layer.isBackground);
 	if (layer.isBackground) {return}; 
 	// deSelectLayers();
 	// layer.sel = true; // No longer needed. After testing, safe to remove.
