@@ -10,7 +10,7 @@ $comicCanvas.addLayer({
   groups: ['ui-buttons'],
   x: 717, y: 10,
   draggable: false,
-  opacity: .9,
+  opacity: 0,
   click: function() {
     deleteSelectedLayers();
   }
@@ -25,6 +25,3 @@ function deleteSelectedLayers() {
   // Redraws layers (required on layer remove, option most other places. Test necessity before altering)
   .drawLayers();
 }
-
-console.log($comicCanvas);
-console.log('script loaded');

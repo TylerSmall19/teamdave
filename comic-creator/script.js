@@ -4,6 +4,21 @@ var $savedComicCanvas = $('#saved-comic-canvas'); //<canvas id="saved-comic-canv
 var hasBackground = false;
 
 // EVENT HANDLERS
+
+$comicCanvas.on('mouseover', function(e) {
+	$(this).setLayerGroup('ui-buttons', {
+		opacity: .9
+	}).drawLayers();
+});
+
+$comicCanvas.on('mouseleave', function(e) {
+	$(this).setLayerGroup('ui-buttons', {
+		opacity: 0
+	}).drawLayers();
+});
+
+$comicCanvas.on('mouseleave')
+
 $(document).on('dragstart', function(e) {
 	var target = e.target;
 	if (target.className != 'draggable') {return};
