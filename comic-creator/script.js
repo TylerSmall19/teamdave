@@ -1,20 +1,25 @@
-$.jCanvas.defaults.fromCenter = false;
+$.jCanvas.defaults.fromCenter = false; // Sets default draw start point to be from upper left corner
 var $comicCanvas = $('#comic-canvas'); // <canvas id="comic-canvas" height="590" width="767">
 var $savedComicCanvas = $('#saved-comic-canvas'); //<canvas id="saved-comic-canvas" width="767" height="129">
 var hasBackground = false;
-var selectedIndex;
 
 // EVENT HANDLERS
 $(document).on('dragstart', function(e) {
 	var target = e.target;
-	if (target.className.includes('draggable') == false) {return};
+	if (target.className != 'draggable') {return};
 	e.dataTransfer = e.originalEvent.dataTransfer;
 	e.dataTransfer.setData('text/plain', target.src);
-	// e.name = "Image";
 	if (target.src.includes("backgrounds")) {return};
 	var img = new Image();
 	img.src = target.src;
 	e.dataTransfer.setDragImage(img, img.width/2, img.height/2);
+});
+
+$(document).on('keyup', function(e) {
+	// On delete key press, delete all selected layers
+	if(e.which == 46){
+		deleteSelectedLayers();
+	}
 });
 
 $comicCanvas.on('dragover', function(e) {
@@ -41,18 +46,20 @@ $comicCanvas.on('drop', function(e) {
 $('#images').on('click', 'img', function() {
 	if(hasBackground){
 		var x = ($comicCanvas.getLayers().length - 1) * 100;
-	}else{
-		var x = $comicCanvas.getLayers().length * 100;
+	}else{ 
+		//TODO: Change this line to bound the x, y and keep the image on screen by default
+		var x = $comicCanvas.getLayers().length * 100; 
 	}
 	addImageLayer(this.src, x, 0);
 });
 
-$comicCanvas.on('click', function(e) {
-	deSelectLayers();
-});
+// Discuss the necessity of this event before removing.
+// $comicCanvas.on('click', function(e) {
+// 	deSelectLayers();
+// });
 
 $('#delete-button').on('click', function(e) {
-	deleteSelectedLayer();
+	deleteSelectedLayers();
 });
 
 $('#add-text').on('click', function(e) {
@@ -109,47 +116,57 @@ function addImageLayer(src, x, y) {
 		x: x, y: y,
 		draggable: false,
 		index: index,
-		sel: true,
 		isBackground: isBackground,
-		// When sedlected, move to .6 opaque
+		// Adds created layer to selected group when new layer is added if the layer isn't a background
+		add: function(layer){
+			if(!isBackground){
+				selectLayer(layer);
+			}
+		},
 		click: function(layer){
-			selectLayer(layer);
+			// Deselect all when background image is clicked
+			if(isBackground){
+				deSelectLayers();
+			// Otherwise, select clicked layer
+			}else{
+				selectLayer(layer);
+			}
 		}
 	});
-
-	// Get layer we just added and select it
-	var length = $comicCanvas.getLayers().length;
-	var layer = $comicCanvas.getLayers()[length - 1];
-	selectLayer(layer);	
 
 	$comicCanvas.drawLayers();
 };
 
 function selectLayer(layer) {
-	// Backgrounds aren't selectable
+	// Backgrounds aren't selectable by default
 	if (layer.isBackground) {return};
-	deSelectLayers();
-	layer.sel = true;
-	$comicCanvas.setLayer(layer, { draggable: true });
+	// When selected, opacity is set to .6 and layer is draggable
 	layer.opacity = 0.6;
-	selectedIndex = layer.index;
-	$comicCanvas.drawLayers();
-};
+	$comicCanvas.setLayer(layer, { draggable: true })
+	// Uses built in JCanvas functionality to track the selected images
+	.addLayerToGroup(layer, 'selected')
+	.drawLayers();
+}
 
 function deSelectLayers() {
+	//Creates and array of all layers on the canvas
 	var layers = $comicCanvas.getLayers();
-	for (var i=0; i<layers.length; i++) {
+	//Sets all the layer group to opacity 1 and draggable false
+	$comicCanvas.setLayerGroup('selected', {
+		opacity: 1,
+		draggable: false
+	})
+	//Remove all layers in the 'selected' group and redraw
+	for (var i=0; i < layers.length; i++) {
 		var layer = layers[i];
-		layer.sel = false;
-		layer.draggable = false;
-		layer.opacity = 1;
-		$comicCanvas.drawLayers();
+		$comicCanvas.removeLayerFromGroup(layer, 'selected');
 	}
-}
-
-function deleteSelectedLayer() {
-	var layer = $comicCanvas.getLayer(selectedIndex);
-	$comicCanvas.removeLayer(layer);
 	$comicCanvas.drawLayers();
 }
 
+function deleteSelectedLayers() {
+	//Removes all layers from canvas in the 'selected' group and redraws layers
+	$comicCanvas.removeLayerGroup('selected')
+	// Redraws layers (required on layer remove, option most other places. Test necessity before altering)
+	.drawLayers();
+}
