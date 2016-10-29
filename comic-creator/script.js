@@ -7,10 +7,9 @@ var selectedIndex;
 // EVENT HANDLERS
 $(document).on('dragstart', function(e) {
 	var target = e.target;
-	if (target.className.includes('draggable') == false) {return};
+	if (target.className != 'draggable') {return};
 	e.dataTransfer = e.originalEvent.dataTransfer;
 	e.dataTransfer.setData('text/plain', target.src);
-	// e.name = "Image";
 	if (target.src.includes("backgrounds")) {return};
 	var img = new Image();
 	img.src = target.src;
@@ -122,7 +121,6 @@ function deSelectLayers() {
 
 function deleteSelectedLayer() {
 	var layer = $comicCanvas.getLayer(selectedIndex);
-	console.log(layer);
 	$comicCanvas.removeLayer(layer)
 	.drawLayers();
 }
