@@ -116,8 +116,8 @@ function selectLayer(layer) {
 	layer.opacity = 0.6;
 	$comicCanvas.setLayer(layer, { draggable: true })
 	// Uses built in JCanvas functionality to track the selected images
-	.addLayerToGroup(layer, 'selected');
-	$comicCanvas.drawLayers();
+	.addLayerToGroup(layer, 'selected')
+	.drawLayers();
 }
 
 function deSelectLayers() {
