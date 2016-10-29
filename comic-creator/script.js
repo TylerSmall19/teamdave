@@ -15,6 +15,13 @@ $(document).on('dragstart', function(e) {
 	e.dataTransfer.setDragImage(img, img.width/2, img.height/2);
 });
 
+$(document).on('keyup', function(e) {
+	// On delete key press, delete all selected layers
+	if(e.which == 46){
+		deleteSelectedLayers();
+	}
+});
+
 $comicCanvas.on('dragover', function(e) {
 	e.preventDefault();
 	e.dataTransfer = e.originalEvent.dataTransfer;
@@ -52,7 +59,7 @@ $('#images').on('click', 'img', function() {
 // });
 
 $('#delete-button').on('click', function(e) {
-	deleteSelectedLayer();
+	deleteSelectedLayers();
 });
 
 // HELPER FUNCTIONS
@@ -129,7 +136,7 @@ function deSelectLayers() {
 	}
 }
 
-function deleteSelectedLayer() {
+function deleteSelectedLayers() {
 	//Removes all layers from canvas in the 'selected' group and redraws layers
 	$comicCanvas.removeLayerGroup('selected')
 	// Redraws layers (required on layer remove, option most other places. Test necessity before altering)
