@@ -14,7 +14,21 @@ $comicCanvas.addLayer({
   click: function() {
     deleteSelectedLayers();
   }
-}).drawLayers();
+});
+
+// Add text button
+$comicCanvas.addLayer({
+  type: 'image',
+  source: 'img/buttons/text-button.png',
+  groups: ['ui-buttons'],
+  x: 717, y: 60,
+  opacity: 0,
+  click: function() {
+    addTextLayer();
+  }
+});
+
+$comicCanvas.drawLayers();
 
 
 // -------- HELPER FUNCTIONS --------
