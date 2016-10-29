@@ -82,9 +82,7 @@ function addLayer(src, x, y) {
 		x: x, y: y,
 		draggable: false,
 		index: index,
-		// sel: true,
 		isBackground: isBackground,
-		// When selected, change to .6 opaque
 		click: function(layer){
 			// Deselect when background image is clicked
 			if(isBackground){
@@ -107,10 +105,12 @@ function addLayer(src, x, y) {
 
 function selectLayer(layer) {
 	// Backgrounds aren't selectable by default
-	if (layer.isBackground) {return}; 
+	if (layer.isBackground) {return};
+	// When selected, opacity is set to .6 and layer is draggable
 	layer.opacity = 0.6;
 	$comicCanvas.setLayer(layer, { draggable: true })
 	// Uses built in JCanvas functionality to track the selected images
+	// JCanvas allows method chaining in this way to make code easier to write
 	.addLayerToGroup(layer, 'selected');
 }
 
@@ -132,5 +132,6 @@ function deSelectLayers() {
 function deleteSelectedLayer() {
 	//Removes all layers from canvas in the 'selected' group and redraws layers
 	$comicCanvas.removeLayerGroup('selected')
+	// Redraws layers (required on layer remove, option most other places. Test necessity before altering)
 	.drawLayers();
 }
