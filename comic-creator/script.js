@@ -4,6 +4,7 @@ var $savedComicCanvas = $('#saved-comic-canvas'); //<canvas id="saved-comic-canv
 var hasBackground = false;
 var selectedIndex;
 
+// EVENT HANDLERS
 $(document).on('dragstart', function(e) {
 	var target = e.target;
 	if (target.className.includes('draggable') == false) {return};
@@ -45,6 +46,16 @@ $('#images').on('click', 'img', function() {
 	}
 	addLayer(this.src, x, 0);
 });
+
+$comicCanvas.on('click', function(e) {
+	deSelectLayers();
+});
+
+$('#delete-button').on('click', function(e) {
+	deleteSelectedLayer();
+});
+
+// HELPER FUNCTIONS
 
 function addLayer(src, x, y) {
 	var index, isBackground;
@@ -89,20 +100,28 @@ function addLayer(src, x, y) {
 };
 
 function selectLayer(layer) {
-	var layers = $comicCanvas.getLayers();
-	for (var i=0; i<layers.length; i++) {
-		var l = layers[i];
-		l.sel = false;
-		l.draggable = false;
-		l.opacity = 1;
-	}
+	deSelectLayers();
 	layer.sel = true;
 	$comicCanvas.setLayer(layer, { draggable: true });
-	console.log(layer);
 	layer.opacity = 0.6;
 	selectedIndex = layer.index;
 	$comicCanvas.drawLayers();
 }
 
+function deSelectLayers() {
+	var layers = $comicCanvas.getLayers();
+	for (var i=0; i<layers.length; i++) {
+		var layer = layers[i];
+		layer.sel = false;
+		layer.draggable = false;
+		layer.opacity = 1;
+		$comicCanvas.drawLayers();
+	}
+}
 
+function deleteSelectedLayer() {
+	var layer = $comicCanvas.getLayer(selectedIndex);
+	$comicCanvas.removeLayer(layer);
+	$comicCanvas.drawLayers();
+}
 
