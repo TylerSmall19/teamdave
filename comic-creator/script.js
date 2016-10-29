@@ -92,14 +92,14 @@ function addLayer(src, x, y) {
 	// Get layer we just added and select it
 	var length = $comicCanvas.getLayers().length;
 	var layer = $comicCanvas.getLayers()[length - 1];
+	selectLayer(layer);	
 
-	// If it's a background, it's not automatically selected
-	if (!layer.isBackground) { selectLayer(layer); };
-	
 	$comicCanvas.drawLayers();
 };
 
 function selectLayer(layer) {
+	// Backgrounds aren't selectable
+	if (layer.isBackground) {return};
 	deSelectLayers();
 	layer.sel = true;
 	$comicCanvas.setLayer(layer, { draggable: true });
