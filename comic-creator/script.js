@@ -1,16 +1,14 @@
-$.jCanvas.defaults.fromCenter = false;
+$.jCanvas.defaults.fromCenter = false; // Sets default draw start point to be from upper left corner
 var $comicCanvas = $('#comic-canvas'); // <canvas id="comic-canvas" height="590" width="767">
 var $savedComicCanvas = $('#saved-comic-canvas'); //<canvas id="saved-comic-canvas" width="767" height="129">
 var hasBackground = false;
-var selectedIndex;
 
 // EVENT HANDLERS
 $(document).on('dragstart', function(e) {
 	var target = e.target;
-	if (target.className.includes('draggable') == false) {return};
+	if (target.className != 'draggable') {return};
 	e.dataTransfer = e.originalEvent.dataTransfer;
 	e.dataTransfer.setData('text/plain', target.src);
-	// e.name = "Image";
 	if (target.src.includes("backgrounds")) {return};
 	var img = new Image();
 	img.src = target.src;
@@ -41,15 +39,17 @@ $comicCanvas.on('drop', function(e) {
 $('#images').on('click', 'img', function() {
 	if(hasBackground){
 		var x = ($comicCanvas.getLayers().length - 1) * 100;
-	}else{
-		var x = $comicCanvas.getLayers().length * 100;
+	}else{ 
+		//TODO: Change this line to bound the x, y and keep the image on screen by default
+		var x = $comicCanvas.getLayers().length * 100; 
 	}
 	addLayer(this.src, x, 0);
 });
 
-$comicCanvas.on('click', function(e) {
-	deSelectLayers();
-});
+// Discuss the necessity of this event before removing.
+// $comicCanvas.on('click', function(e) {
+// 	deSelectLayers();
+// });
 
 $('#delete-button').on('click', function(e) {
 	deleteSelectedLayer();
@@ -59,6 +59,7 @@ $('#delete-button').on('click', function(e) {
 
 function addLayer(src, x, y) {
 	var index, isBackground;
+	console.log(src.includes('backgrounds'));
 	if (src.includes('backgrounds')) {
 		isBackground = true;
 		// Backgrounds are centered in canvas...
@@ -81,49 +82,56 @@ function addLayer(src, x, y) {
 		x: x, y: y,
 		draggable: false,
 		index: index,
-		sel: true,
 		isBackground: isBackground,
-		// When sedlected, move to .6 opaque
 		click: function(layer){
-			selectLayer(layer);
+			// Deselect when background image is clicked
+			if(isBackground){
+				deSelectLayers();
+			// Otherwise, select clicked layer
+			}else{
+				selectLayer(layer);
+			}
 		}
 	});
 
+	// TODO: Refactor to prevent issues with unwanted selection -- see 'Issues' in Git Hub Repo.
 	// Get layer we just added and select it
 	var length = $comicCanvas.getLayers().length;
 	var layer = $comicCanvas.getLayers()[length - 1];
-	selectLayer(layer);	
+	selectLayer(layer);
 
 	$comicCanvas.drawLayers();
 };
 
 function selectLayer(layer) {
-	// Backgrounds aren't selectable
+	// Backgrounds aren't selectable by default
 	if (layer.isBackground) {return};
-	deSelectLayers();
-	layer.sel = true;
-	$comicCanvas.setLayer(layer, { draggable: true });
+	// When selected, opacity is set to .6 and layer is draggable
 	layer.opacity = 0.6;
-	selectedIndex = layer.index;
-	$comicCanvas.drawLayers();
+	$comicCanvas.setLayer(layer, { draggable: true })
+	// Uses built in JCanvas functionality to track the selected images
+	// JCanvas allows method chaining in this way to make code easier to write
+	.addLayerToGroup(layer, 'selected');
 }
 
 function deSelectLayers() {
+	//Creates and array of all layers on the canvas
 	var layers = $comicCanvas.getLayers();
+	//Sets all the layer group to opacity 1 and draggable false
+	$comicCanvas.setLayerGroup('selected', {
+		opacity: 1,
+		draggable: false
+	})
+	//Remove all layers in the 'selected' group and redraw
 	for (var i=0; i < layers.length; i++) {
 		var layer = layers[i];
-		layer.sel = false;
-		layer.draggable = false;
-		layer.opacity = 1;
-		selectedIndex = null;
-		$comicCanvas.drawLayers();
+		$comicCanvas.removeLayerFromGroup(layer, 'selected');
 	}
 }
 
 function deleteSelectedLayer() {
-	var layer = $comicCanvas.getLayer(selectedIndex);
-	console.log(layer);
-	$comicCanvas.removeLayer(layer)
+	//Removes all layers from canvas in the 'selected' group and redraws layers
+	$comicCanvas.removeLayerGroup('selected')
+	// Redraws layers (required on layer remove, option most other places. Test necessity before altering)
 	.drawLayers();
 }
-
