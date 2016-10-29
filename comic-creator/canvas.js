@@ -28,10 +28,32 @@ $comicCanvas.addLayer({
   }
 });
 
+// Add bring-to-front button
+$comicCanvas.addLayer({
+  type: 'image',
+  source: 'img/buttons/bring-to-front-button.png',
+  groups: ['ui-buttons'],
+  x: 717, y: 110,
+  opacity: 0,
+  click: function() {
+    bringSelectedLayersToFront();
+  }
+});
+
 $comicCanvas.drawLayers();
 
 
 // -------- HELPER FUNCTIONS --------
+
+function bringSelectedLayersToFront() {
+  // TODO
+  console.log('Brought selected layers to front');
+}
+
+function addTextLayer(text) {
+  // TODO
+  console.log('Added text layer');
+}
 
 function deleteSelectedLayers() {
   //Removes all layers from canvas in the 'selected' group and redraws layers
