@@ -35,7 +35,7 @@ $comicCanvas.on('drop', function(e) {
 	// Use image size to draw on canvas right where you drop it.
 	var x = e.pageX - $comicCanvas.offset().left - img.width/2;
 	var y = e.pageY - $comicCanvas.offset().top - img.height/2;
-	addLayer(src, x, y);
+	addImageLayer(src, x, y);
 });
 
 $('#images').on('click', 'img', function() {
@@ -44,7 +44,7 @@ $('#images').on('click', 'img', function() {
 	}else{
 		var x = $comicCanvas.getLayers().length * 100;
 	}
-	addLayer(this.src, x, 0);
+	addImageLayer(this.src, x, 0);
 });
 
 $comicCanvas.on('click', function(e) {
@@ -55,9 +55,37 @@ $('#delete-button').on('click', function(e) {
 	deleteSelectedLayer();
 });
 
+$('#add-text').on('click', function(e) {
+	console.log('Clicked add button');
+	if ($('textarea').val() == "") {
+		console.log('Text area has no value');
+		return
+	};
+	var text = $('textarea').val();
+	addTextLayer(text, 0, 0);
+	console.log("added text");
+});
+
 // HELPER FUNCTIONS
 
-function addLayer(src, x, y) {
+function addTextLayer(text, x, y) {
+	$comicCanvas.drawText({
+		layer: true,
+		draggable: false,
+	  fillStyle: '#9cf',
+	  strokeStyle: '#25a',
+	  strokeWidth: 2,
+	  x: x, y: y,
+	  fontSize: 48,
+	  fontFamily: 'Verdana, sans-serif',
+	  text: text,
+	  click: function(layer) {
+	  	selectLayer(layer);
+	  }
+	});
+};
+
+function addImageLayer(src, x, y) {
 	var index, isBackground;
 	if (src.includes('backgrounds')) {
 		isBackground = true;
@@ -106,7 +134,7 @@ function selectLayer(layer) {
 	layer.opacity = 0.6;
 	selectedIndex = layer.index;
 	$comicCanvas.drawLayers();
-}
+};
 
 function deSelectLayers() {
 	var layers = $comicCanvas.getLayers();
