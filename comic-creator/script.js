@@ -135,10 +135,3 @@ function deSelectLayers() {
 	}
 	$comicCanvas.drawLayers();
 }
-
-function deleteSelectedLayers() {
-	//Removes all layers from canvas in the 'selected' group and redraws layers
-	$comicCanvas.removeLayerGroup('selected')
-	// Redraws layers (required on layer remove, option most other places. Test necessity before altering)
-	.drawLayers();
-}
