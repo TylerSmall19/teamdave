@@ -15,6 +15,13 @@ $(document).on('dragstart', function(e) {
 	e.dataTransfer.setDragImage(img, img.width/2, img.height/2);
 });
 
+$(document).on('keyup', function(e) {
+	// On delete key press, delete all selected layers
+	if(e.which == 46){
+		deleteSelectedLayers();
+	}
+});
+
 $comicCanvas.on('dragover', function(e) {
 	e.preventDefault();
 	e.dataTransfer = e.originalEvent.dataTransfer;
@@ -52,14 +59,13 @@ $('#images').on('click', 'img', function() {
 // });
 
 $('#delete-button').on('click', function(e) {
-	deleteSelectedLayer();
+	deleteSelectedLayers();
 });
 
 // HELPER FUNCTIONS
 
 function addLayer(src, x, y) {
 	var index, isBackground;
-	console.log(src.includes('backgrounds'));
 	if (src.includes('backgrounds')) {
 		isBackground = true;
 		// Backgrounds are centered in canvas...
@@ -83,8 +89,14 @@ function addLayer(src, x, y) {
 		draggable: false,
 		index: index,
 		isBackground: isBackground,
+		// Adds created layer to selected group when new layer is added if the layer isn't a background
+		add: function(layer){
+			if(!isBackground){
+				selectLayer(layer);
+			}
+		},
 		click: function(layer){
-			// Deselect when background image is clicked
+			// Deselect all when background image is clicked
 			if(isBackground){
 				deSelectLayers();
 			// Otherwise, select clicked layer
@@ -93,12 +105,6 @@ function addLayer(src, x, y) {
 			}
 		}
 	});
-
-	// TODO: Refactor to prevent issues with unwanted selection -- see 'Issues' in Git Hub Repo.
-	// Get layer we just added and select it
-	var length = $comicCanvas.getLayers().length;
-	var layer = $comicCanvas.getLayers()[length - 1];
-	selectLayer(layer);
 
 	$comicCanvas.drawLayers();
 };
@@ -110,7 +116,6 @@ function selectLayer(layer) {
 	layer.opacity = 0.6;
 	$comicCanvas.setLayer(layer, { draggable: true })
 	// Uses built in JCanvas functionality to track the selected images
-	// JCanvas allows method chaining in this way to make code easier to write
 	.addLayerToGroup(layer, 'selected');
 }
 
@@ -129,7 +134,7 @@ function deSelectLayers() {
 	}
 }
 
-function deleteSelectedLayer() {
+function deleteSelectedLayers() {
 	//Removes all layers from canvas in the 'selected' group and redraws layers
 	$comicCanvas.removeLayerGroup('selected')
 	// Redraws layers (required on layer remove, option most other places. Test necessity before altering)
