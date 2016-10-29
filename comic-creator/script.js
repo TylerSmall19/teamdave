@@ -17,8 +17,6 @@ $comicCanvas.on('mouseleave', function(e) {
 	}).drawLayers();
 });
 
-$comicCanvas.on('mouseleave')
-
 $(document).on('dragstart', function(e) {
 	var target = e.target;
 	if (target.className != 'draggable') {return};
