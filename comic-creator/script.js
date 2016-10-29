@@ -2,7 +2,9 @@ $.jCanvas.defaults.fromCenter = false;
 var $comicCanvas = $('#comic-canvas'); // <canvas id="comic-canvas" height="590" width="767">
 var $savedComicCanvas = $('#saved-comic-canvas'); //<canvas id="saved-comic-canvas" width="767" height="129">
 var hasBackground = false;
+var selectedIndex;
 
+// EVENT HANDLERS
 $(document).on('dragstart', function(e) {
 	var target = e.target;
 	if (target.className.includes('draggable') == false) {return};
@@ -36,50 +38,6 @@ $comicCanvas.on('drop', function(e) {
 	addLayer(src, x, y);
 });
 
-function addLayer(src, x, y) {
-	var index, draggable;
-	if (src.includes('backgrounds')) {
-		// Backgrounds are centered in canvas...
-		x = 0;
-		y = 0;
-		// Undraggable...
-		draggable = false;
-		// And replace the previous background if already drawn
-		if (hasBackground) {
-			$comicCanvas.removeLayer(0);
-			index = 0; 
-		}
-		hasBackground = true;
-	} else {
-		draggable = true
-		index = 1 + $comicCanvas.getLayers().length;
-		console.log(index);
-	};
-
-	$comicCanvas.addLayer({
-		type: 'image',
-		source: src,
-		x: x, y: y,
-		draggable: draggable,
-		index: index,
-		sel: false,
-		// When selected, move to .6 opaque
-		dblclick: function(layer){
-			if(layer.sel == false){
-				layer.sel = true;
-			}else{
-				layer.sel = false;
-			}
-			if (layer.sel){
-				layer.opacity = 0.6;
-			}else{
-				layer.opacity = 1;
-			}
-			console.log(layer.sel);
-		}
-	}).drawLayers();
-}
-
 $('#images').on('click', 'img', function() {
 	if(hasBackground){
 		var x = ($comicCanvas.getLayers().length - 1) * 100;
@@ -87,5 +45,83 @@ $('#images').on('click', 'img', function() {
 		var x = $comicCanvas.getLayers().length * 100;
 	}
 	addLayer(this.src, x, 0);
-})
+});
+
+$comicCanvas.on('click', function(e) {
+	deSelectLayers();
+});
+
+$('#delete-button').on('click', function(e) {
+	deleteSelectedLayer();
+});
+
+// HELPER FUNCTIONS
+
+function addLayer(src, x, y) {
+	var index, isBackground;
+	if (src.includes('backgrounds')) {
+		isBackground = true;
+		// Backgrounds are centered in canvas...
+		x = 0;
+		y = 0;
+		// And replace the previous background if already drawn
+		if (hasBackground) {
+			$comicCanvas.removeLayer(0);
+			index = 0; 
+		}
+		hasBackground = true;
+	} else {
+		isBackground = false;
+		index = 1 + $comicCanvas.getLayers().length;
+	};
+
+	$comicCanvas.addLayer({
+		type: 'image',
+		source: src,
+		x: x, y: y,
+		draggable: false,
+		index: index,
+		sel: true,
+		isBackground: isBackground,
+		// When sedlected, move to .6 opaque
+		click: function(layer){
+			selectLayer(layer);
+		}
+	});
+
+	// Get layer we just added and select it
+	var length = $comicCanvas.getLayers().length;
+	var layer = $comicCanvas.getLayers()[length - 1];
+	selectLayer(layer);	
+
+	$comicCanvas.drawLayers();
+};
+
+function selectLayer(layer) {
+	// Backgrounds aren't selectable
+	if (layer.isBackground) {return};
+	deSelectLayers();
+	layer.sel = true;
+	$comicCanvas.setLayer(layer, { draggable: true });
+	layer.opacity = 0.6;
+	selectedIndex = layer.index;
+	$comicCanvas.drawLayers();
+}
+
+function deSelectLayers() {
+	var layers = $comicCanvas.getLayers();
+	for (var i=0; i<layers.length; i++) {
+		var layer = layers[i];
+		layer.sel = false;
+		layer.draggable = false;
+		layer.opacity = 1;
+		$comicCanvas.drawLayers();
+	}
+}
+
+function deleteSelectedLayer() {
+	var layer = $comicCanvas.getLayer(selectedIndex);
+	$comicCanvas.removeLayer(layer);
+	$comicCanvas.drawLayers();
+}
 
