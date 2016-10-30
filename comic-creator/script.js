@@ -49,7 +49,6 @@ $comicCanvas.on('drop', function(e) {
 	// Find image size
 	var img = new Image();
 	img.src = src;
-	img.load();
 
 	// Use image size to draw on canvas right where you drop it.
 	var x = e.pageX - $comicCanvas.offset().left - img.width/2;
@@ -88,23 +87,6 @@ $('#add-text').on('click', function(e) {
 });
 
 // HELPER FUNCTIONS
-
-function addTextLayer(text, x, y) {
-	$comicCanvas.drawText({
-		layer: true,
-		draggable: false,
-	  fillStyle: '#9cf',
-	  strokeStyle: '#25a',
-	  strokeWidth: 2,
-	  x: x, y: y,
-	  fontSize: 48,
-	  fontFamily: 'Verdana, sans-serif',
-	  text: text,
-	  click: function(layer) {
-	  	selectLayer(layer);
-	  }
-	});
-};
 
 function addImageLayer(src, x, y) {
 	var index, isBackground;

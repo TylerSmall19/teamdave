@@ -35,9 +35,8 @@ function layoutUIButtons(src, x, y) {
 
     // Increment y for next button draw
     y += (img.height + 10);
+    console.log('Set up ' + name + ' button');
   }
-
-  $comicCanvas.drawLayers();
 };
 
 // -------- CLICK HANDLERS --------
@@ -57,31 +56,47 @@ function deleteSelectedLayers() {
   $comicCanvas.removeLayerGroup('selected')
   // Redraws layers (required on layer remove, option most other places. Test necessity before altering)
   .drawLayers();
+  console.log('Deleted selected layers');
 }
+
+function addTextLayer(text, x, y) {
+  $comicCanvas.drawText({
+    layer: true,
+    draggable: false,
+    fillStyle: '#9cf',
+    strokeStyle: '#25a',
+    strokeWidth: 2,
+    x: x, y: y,
+    fontSize: 48,
+    fontFamily: 'Verdana, sans-serif',
+    text: text,
+    click: function(layer) {
+      selectLayer(layer);
+    }
+  });
+};
 
 // -------- RUN SCRIPT --------
 
-$(document).ready(function() {
+layoutUIButtons();
   
-  // Add click handlers
-  $comicCanvas.setLayer('delete-button', {
-    click: function(layer) {
-      deleteSelectedLayers();
-    }
-  });
-
-  $comicCanvas.setLayer('text-button', {
-    click: function(layer) {
-      addTextLayer();
-    }
-  });
-
-  $comicCanvas.setLayer('bring-to-front', {
-    click: function(layer) {
-      bringSelectedLayersToFront();
-    }
-  });
-
-  layoutUIButtons();
-
+// Add click handlers
+$comicCanvas.setLayer('delete-button', {
+  click: function(layer) {
+    deleteSelectedLayers();
+  }
 });
+
+$comicCanvas.setLayer('text-button', {
+  click: function(layer) {
+    addTextLayer('hello world', 0, 0);
+  }
+});
+
+$comicCanvas.setLayer('bring-to-front', {
+  click: function(layer) {
+    bringSelectedLayersToFront();
+  }
+});
+
+$comicCanvas.drawLayers();
