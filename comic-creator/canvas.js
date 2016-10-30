@@ -12,8 +12,8 @@ function layoutUIButtons(src, x, y) {
 
   var y = 10;
 
-  for (var i = 0; i < sources.length; i++) {
-    var name = sources[i];
+  for (var i = 0; i < imgNames.length; i++) {
+    var name = imgNames[i];
     var src = 'img/buttons/' + name + '.png';
     
     // Get image width
@@ -63,8 +63,6 @@ function deleteSelectedLayers() {
 
 $(document).ready(function() {
   
-  layoutUIButtons();
-  
   // Add click handlers
   $comicCanvas.setLayer('delete-button', {
     click: function(layer) {
@@ -82,6 +80,8 @@ $(document).ready(function() {
     click: function(layer) {
       bringSelectedLayersToFront();
     }
-  })
+  });
+
+  layoutUIButtons();
 
 });
