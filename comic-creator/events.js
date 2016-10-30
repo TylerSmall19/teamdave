@@ -1,5 +1,3 @@
-// ------- EVENT HANDLERS --------
-
 $comicCanvas.on('mouseover', function(e) {
   $(this).setLayerGroup('ui-buttons', {
     opacity: .9
