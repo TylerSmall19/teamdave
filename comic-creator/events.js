@@ -1,12 +1,12 @@
 $comicCanvas.on('mouseover', function(e) {
   $(this).setLayerGroup('ui-buttons', {
-    opacity: .9
+    visible: true
   }).drawLayers();
 });
 
 $comicCanvas.on('mouseleave', function(e) {
   $(this).setLayerGroup('ui-buttons', {
-    opacity: 0
+    visible: false
   }).drawLayers();
 });
 

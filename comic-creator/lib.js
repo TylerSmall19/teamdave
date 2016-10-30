@@ -103,7 +103,7 @@ function layoutUIButtons(src, x, y) {
       source: src,
       groups: ['ui-buttons'],
       x: x, y: y,
-      opacity: 0,
+      visible: false,
       draggable: false
     });
 
