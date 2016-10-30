@@ -40,8 +40,16 @@ function layoutUIButtons(src, x, y) {
 
 // -------- CLICK HANDLERS --------
 
-function bringSelectedLayersToFront() {
-  // TODO
+function bringLayerGroupToFront(layerGroup) {
+  var group = $comicCanvas.getLayerGroup(layerGroup);
+  if (group) {
+    var lastIndex = $comicCanvas.getLayers().length - 1;
+    for (var i = 0; i < group.length; i++) {
+      var layer = group[i];
+      $comicCanvas.moveLayer(layer, lastIndex);
+    };
+    $comicCanvas.drawLayers();
+  }
 }
 
 function addTextLayer(text, x, y) {
@@ -87,7 +95,9 @@ $comicCanvas.setLayer('text-button', {
 
 $comicCanvas.setLayer('bring-to-front', {
   click: function(layer) {
-    bringSelectedLayersToFront();
+    bringLayerGroupToFront('selected');
+    // UI Buttons should always be on top
+    bringLayerGroupToFront('ui-buttons');
   }
 });
 

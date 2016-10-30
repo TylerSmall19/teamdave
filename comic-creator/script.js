@@ -125,6 +125,8 @@ function addImageLayer(src, x, y) {
 		}
 	});
 
+	// UI Buttons should always be in front
+	bringLayerGroupToFront('ui-buttons');
 	$comicCanvas.drawLayers();
 };
 
