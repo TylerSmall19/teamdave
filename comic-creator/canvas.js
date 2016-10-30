@@ -1,47 +1,45 @@
 $.jCanvas.defaults.fromCenter = false; // Sets default draw start point to be from upper left corner
 var $comicCanvas = $('#comic-canvas'); // <canvas id="comic-canvas" height="590" width="767">
 
+$(document).ready(function() {
+  layoutUIButtons();
+});
+
 // -------- CANVAS SETUP --------
 
-// Add delete button
-$comicCanvas.addLayer({
-  type: 'image',
-  source: 'img/buttons/delete-button.png',
-  groups: ['ui-buttons'],
-  x: 717, y: 10,
-  draggable: false,
-  opacity: 0,
-  click: function() {
-    deleteSelectedLayers();
+function layoutUIButtons(src, x, y) {
+  var sources = [
+    'delete-button.png', 
+    'text-button.png', 
+    'bring-to-front-button.png'
+  ];
+
+  var y = 10;
+
+  for (var i = 0; i < sources.length; i++) {
+    var src = 'img/buttons/' + sources[i];
+    
+    // Get image width
+    var img = new Image();
+    img.src = src;
+
+    // Set x to image width + 10
+    var x = $comicCanvas.width() - 10 - img.width;
+
+    $comicCanvas.addLayer({
+      type: 'image',
+      source: src,
+      groups: ['ui-buttons'],
+      x: x, y: y,
+      opacity: 0,
+      draggable: false
+    });
+
+    y += (img.height + 10);
   }
-});
 
-// Add text button
-$comicCanvas.addLayer({
-  type: 'image',
-  source: 'img/buttons/text-button.png',
-  groups: ['ui-buttons'],
-  x: 717, y: 60,
-  opacity: 0,
-  click: function() {
-    addTextLayer();
-  }
-});
-
-// Add bring-to-front button
-$comicCanvas.addLayer({
-  type: 'image',
-  source: 'img/buttons/bring-to-front-button.png',
-  groups: ['ui-buttons'],
-  x: 717, y: 110,
-  opacity: 0,
-  click: function() {
-    bringSelectedLayersToFront();
-  }
-});
-
-$comicCanvas.drawLayers();
-
+  $comicCanvas.drawLayers();
+};
 
 // -------- HELPER FUNCTIONS --------
 

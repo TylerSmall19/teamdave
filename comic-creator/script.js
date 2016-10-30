@@ -49,6 +49,7 @@ $comicCanvas.on('drop', function(e) {
 	// Find image size
 	var img = new Image();
 	img.src = src;
+	img.load();
 
 	// Use image size to draw on canvas right where you drop it.
 	var x = e.pageX - $comicCanvas.offset().left - img.width/2;
