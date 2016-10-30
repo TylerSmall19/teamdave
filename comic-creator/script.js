@@ -76,14 +76,9 @@ $('#delete-button').on('click', function(e) {
 });
 
 $('#add-text').on('click', function(e) {
-	console.log('Clicked add button');
-	if ($('textarea').val() == "") {
-		console.log('Text area has no value');
-		return
-	};
+	if ($('textarea').val() == "") {return};
 	var text = $('textarea').val();
 	addTextLayer(text, 0, 0);
-	console.log("added text");
 });
 
 // HELPER FUNCTIONS

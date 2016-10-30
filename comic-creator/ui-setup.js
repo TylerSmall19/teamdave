@@ -35,7 +35,6 @@ function layoutUIButtons(src, x, y) {
 
     // Increment y for next button draw
     y += (img.height + 10);
-    console.log('Set up ' + name + ' button');
   }
 };
 
@@ -43,7 +42,6 @@ function layoutUIButtons(src, x, y) {
 
 function bringSelectedLayersToFront() {
   // TODO
-  console.log('Brought selected layers to front');
 }
 
 function addTextLayer(text, x, y) {
@@ -55,7 +53,7 @@ function addTextLayer(text, x, y) {
     strokeWidth: 2,
     x: x, y: y,
     fontSize: 48,
-    fontFamily: 'Verdana, sans-serif',
+    fontFamily: 'comic-sans, sans-serif',
     text: text,
     click: function(layer) {
       selectLayer(layer);
@@ -68,7 +66,6 @@ function deleteSelectedLayers() {
   $comicCanvas.removeLayerGroup('selected')
   // Redraws layers (required on layer remove, option most other places. Test necessity before altering)
   .drawLayers();
-  console.log('Deleted selected layers');
 }
 
 // -------- RUN SCRIPT --------
