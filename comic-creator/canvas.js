@@ -8,26 +8,28 @@ $(document).ready(function() {
 // -------- CANVAS SETUP --------
 
 function layoutUIButtons(src, x, y) {
-  var sources = [
-    'delete-button.png', 
-    'text-button.png', 
-    'bring-to-front-button.png'
+  var imgNames = [
+    'delete-button', 
+    'text-button', 
+    'bring-to-front'
   ];
 
   var y = 10;
 
   for (var i = 0; i < sources.length; i++) {
-    var src = 'img/buttons/' + sources[i];
+    var name = sources[i];
+    var src = 'img/buttons/' + name + '.png';
     
     // Get image width
     var img = new Image();
     img.src = src;
 
-    // Set x to image width + 10
+    // Set x to image width + 10, away from right edge
     var x = $comicCanvas.width() - 10 - img.width;
 
     $comicCanvas.addLayer({
       type: 'image',
+      name: name,
       source: src,
       groups: ['ui-buttons'],
       x: x, y: y,
@@ -35,6 +37,7 @@ function layoutUIButtons(src, x, y) {
       draggable: false
     });
 
+    // Increment y for next button draw
     y += (img.height + 10);
   }
 
