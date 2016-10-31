@@ -1,4 +1,15 @@
 
+$comicCanvas.addLayer({
+  type: 'image',
+  name: 'bgdefault',
+  source: 'img/bgdefault.png',
+  x: 0, y: 0,
+  draggable: false,
+  click: function() {
+    deSelectLayers();
+  }
+}).drawLayers();
+
 layoutUIButtons();
   
 // Add click handlers
