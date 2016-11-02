@@ -48,6 +48,10 @@
 				<img src="img/characters/thinker.png" class="draggable" width="40">
 				<img src="img/text/thought-bubble.png" class="draggable" width="40">
 			</div>
+			<div id="text">
+				<textarea placeholder="Enter text here"></textarea>
+				<button name="add-text" id="add-text">Add Text</button>
+			</div>
 
 		</aside>
 
@@ -75,18 +79,17 @@
 
 	</div> <!-- END container div -->
 
-
-
+<!-- Temporary fix to correctly layour ui-buttons -->
+<img src="img/bgdefault.png" hidden="true">
+<img src="img/buttons/delete-button.png" hidden="true">
+<img src="img/buttons/text-button.png" hidden="true">
+<img src="img/buttons/bring-to-front.png" hidden="true">
+<!--============================================= -->
 	
-
+<script src="jquery-3.1.1.min.js"></script>
+<script src="jcanvas.min.js"></script>
+<script src="lib.js"></script>
+<script src="events.js"></script>
+<script src="ui-setup.js"></script>
 </body>
 </html>
-
-<script src="jquery-3.1.1.min.js"></script>
-<script
-  src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
-  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
-  crossorigin="anonymous">
-</script>
-<script src="jcanvas.min.js"></script>
-<script src="script.js"></script>
