@@ -1,0 +1,19 @@
+{
+  "name": "teamdave",
+  "version": "1.0.0",
+  "description": "Comic book creator using HTML5 Canvas",
+  "main": "comic-creator/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TylerSmall19/teamdave.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TylerSmall19/teamdave/issues"
+  },
+  "homepage": "https://github.com/TylerSmall19/teamdave#readme"
+}
