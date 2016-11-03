@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/TylerSmall19/teamdave/issues"
   },
-  "homepage": "https://github.com/TylerSmall19/teamdave#readme"
+  "homepage": "https://github.com/TylerSmall19/teamdave#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
 }
