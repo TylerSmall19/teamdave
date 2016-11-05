@@ -1,0 +1,23 @@
+{
+  "backgrounds": [{
+    "name": "bg1",
+    "path": "img/backgrounds/bg1.png"
+  }, {
+    "name": "bg2",
+    "path": "img/backgrounds/bg2.png"
+  }, {
+    "name": "bg3",
+    "path": "img/backgrounds/bg3.png"
+  }],
+  "characters": [{
+    "name": "stick-figure",
+    "path": "img/characters/stick-figure.png"
+  }, {
+    "name": "thinker",
+    "path": "img/characters/thinker.png"
+  }],
+  "text": [{
+    "name": "thought-bubble",
+    "path": "img/text/thought-bubble.png"
+  }]
+}
