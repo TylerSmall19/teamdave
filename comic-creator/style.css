@@ -112,6 +112,10 @@ div.container{
 
 /* BEGIN ID DECLARATIONS */
 
+#images {
+	height: 50%;
+}
+
 #delete-button{
 	color: red;
 }

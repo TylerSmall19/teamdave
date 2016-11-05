@@ -16,8 +16,8 @@
     "name": "thinker",
     "path": "img/characters/thinker.png"
   }],
-  "text": [{
+  "speech bubbles": [{
     "name": "thought-bubble",
-    "path": "img/text/thought-bubble.png"
+    "path": "img/speech bubbles/thought-bubble.png"
   }]
 }

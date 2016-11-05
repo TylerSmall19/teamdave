@@ -59,11 +59,6 @@ $('#images').on('click', 'img', function() {
   addImageLayer(this.src, x, 0);
 });
 
-// Discuss the necessity of this event before removing.
-// $comicCanvas.on('click', function(e) {
-//  deSelectLayers();
-// });
-
 $('#delete-button').on('click', function(e) {
   deleteSelectedLayers();
 });
@@ -73,3 +68,8 @@ $('#add-text').on('click', function(e) {
   var text = $('textarea').val();
   addTextLayer(text, 0, 0);
 });
+
+$('#image-type').on('change', function() {
+  var type = $(this).val();
+  loadImagesOfType(type);
+})
