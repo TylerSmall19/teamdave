@@ -72,4 +72,4 @@ $('#add-text').on('click', function(e) {
 $('#image-type').on('change', function() {
   var type = $(this).val();
   loadImagesOfType(type);
-})
+});

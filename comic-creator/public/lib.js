@@ -162,6 +162,8 @@ function loadImagesOfType(type) {
             // Create a new image of height 40 x 40
             var img = new Image(40, 40);
             img.src = imgGroup[i]['path'];
+            //Set class to draggable
+            img.className = "draggable";
             //Set line height to 0 to avoid extra bottom space
             img.style.verticalAlign = 'middle';
             // Append image to image div
@@ -181,9 +183,9 @@ function loadAllImages() {
     for (key in data) {
       var imgGroup = data[key];
       for (var i = 0; i < imgGroup.length; i++) {
-        //Create a new image of height 40 x 40
         var img = new Image(40, 40);
         img.src = imgGroup[i]['path'];
+        img.className = "draggable";
         img.style.verticalAlign = 'middle';
         $('#images').append(img);
       };
