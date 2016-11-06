@@ -28,6 +28,7 @@ function addImageLayer(src, x, y) {
     draggable: false,
     index: index,
     isBackground: isBackground,
+    resizeFromCenter: false,
     // Adds created layer to selected group when new layer is added if the layer isn't a background
     add: function(layer){
       if(!isBackground){
@@ -55,7 +56,16 @@ function selectLayer(layer) {
   if (layer.isBackground) {return};
   // When selected, opacity is set to .6 and layer is draggable
   layer.opacity = 0.6;
-  $comicCanvas.setLayer(layer, { draggable: true })
+  $comicCanvas.setLayer(layer, { 
+    draggable: true,
+    handle: {
+      type: 'arc',
+      fillStyle: '#fff',
+      strokeStyle: '#c33',
+      strokeWidth: 2,
+      radius: 10
+    }
+  })
   // Uses built in JCanvas functionality to track the selected images
   .addLayerToGroup(layer, 'selected')
   .drawLayers();
@@ -67,7 +77,8 @@ function deSelectLayers() {
   //Sets all the layer group to opacity 1 and draggable false
   $comicCanvas.setLayerGroup('selected', {
     opacity: 1,
-    draggable: false
+    draggable: false,
+    handle: null
   })
   //Remove all layers in the 'selected' group and redraw
   for (var i=0; i < layers.length; i++) {

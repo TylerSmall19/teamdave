@@ -56,7 +56,7 @@ $('#images').on('click', 'img', function() {
     //TODO: Change this line to bound the x, y and keep the image on screen by default
     var x = $comicCanvas.getLayers().length * 100; 
   }
-  addImageLayer(this.src, x, 0);
+  addImageLayer(this.src, 0, 0);
 });
 
 $('#delete-button').on('click', function(e) {
