@@ -91,7 +91,7 @@ function layoutUIButtons(src, x, y) {
     var src = 'img/buttons/' + name + '.png';
     
     // Get image width
-    var img = new Image();
+    var img = new Image(40, 40);
     img.src = src;
 
     // Set x to image width + 10, away from right edge
@@ -146,4 +146,49 @@ function deleteSelectedLayers() {
   $comicCanvas.removeLayerGroup('selected')
   // Redraws layers (required on layer remove, option most other places. Test necessity before altering)
   .drawLayers();
+}
+
+function loadImagesOfType(type) {
+  switch (type) {
+    case 'All':
+      loadAllImages();
+      break;
+    default:
+      $('#images').html('');
+      $.getJSON('images.json', function(data) {
+        if (data[type.toLowerCase()]) {
+          var imgGroup = data[type.toLowerCase()];
+          for (var i = 0; i < imgGroup.length; i++) {
+            // Create a new image of height 40 x 40
+            var img = new Image(40, 40);
+            img.src = imgGroup[i]['path'];
+            //Set class to draggable
+            img.className = "draggable";
+            //Set line height to 0 to avoid extra bottom space
+            img.style.verticalAlign = 'middle';
+            // Append image to image div
+            $('#images').append(img);
+          };
+        } else {
+          console.log("ERROR - No images available of that type.");
+        }
+      });
+      break;
+  }
+}
+
+function loadAllImages() {
+  $('#images').html('');
+  $.getJSON('images.json', function(data) {
+    for (key in data) {
+      var imgGroup = data[key];
+      for (var i = 0; i < imgGroup.length; i++) {
+        var img = new Image(40, 40);
+        img.src = imgGroup[i]['path'];
+        img.className = "draggable";
+        img.style.verticalAlign = 'middle';
+        $('#images').append(img);
+      };
+    };
+  });
 }

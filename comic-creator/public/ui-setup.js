@@ -1,4 +1,3 @@
-
 $comicCanvas.addLayer({
   type: 'image',
   name: 'bgdefault',
@@ -34,3 +33,6 @@ $comicCanvas.setLayer('bring-to-front', {
 });
 
 $comicCanvas.drawLayers();
+
+//Load all images to images div
+loadAllImages();
