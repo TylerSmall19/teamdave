@@ -50,12 +50,8 @@ $comicCanvas.on('drop', function(e) {
 });
 
 $('#images').on('click', 'img', function() {
-  if(hasBackground){
-    var x = ($comicCanvas.getLayers().length - 1) * 100;
-  }else{ 
-    //TODO: Change this line to bound the x, y and keep the image on screen by default
-    var x = $comicCanvas.getLayers().length * 100; 
-  }
+  var length = $comicCanvas.getLayers().length;
+  var x = length - (length/4);
   addImageLayer(this.src, x, 0);
 });
 
