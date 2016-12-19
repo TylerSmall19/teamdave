@@ -1,0 +1,11 @@
+<% if @lobbies %>
+  <% @lobbies.each do |lobby| %>
+
+    <!-- Would this be the right name for this? -->
+    <%=
+    erb :'/lobbies/_show',
+            locals: { lobby: lobby }
+    %>
+
+  <% end %>
+<% end %>
