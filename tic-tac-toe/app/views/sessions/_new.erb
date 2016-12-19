@@ -1,0 +1,15 @@
+<% if @errors %>
+  <%= erb :'/_errors', locals: { errors: @errors } %>
+<% end %>
+
+<form method='post' action='/sessions' id='new'>
+  <label for='username'> Username: </label>
+  <input type='text' name='username'>
+  <label for='password'> Password: </label>
+  <input type='password' name='password'>
+
+  <button id='login-button'>login</button>
+</form>
+
+<!-- Allow the partial to serve its own redirect link for AJAX's sake (Makes it easier for me) -->
+<a href='/users/new' id='get-form'>Don't Have an Account?</a>
