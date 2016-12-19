@@ -1,0 +1,15 @@
+.cell {
+  width: 100px;
+  height: 100px;
+  border: solid 1px black;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#game-board {
+  margin: 0 auto;
+  min-width: 304px;
+}

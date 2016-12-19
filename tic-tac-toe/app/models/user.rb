@@ -2,6 +2,10 @@ class User < ActiveRecord::Base
   validates :username, :email, presence: true
   validates :email, :username, uniqueness: true
 
+  has_many :lobbies, foreign_key: :owner_id
+
+  has_one :active_game, through: :lobbies, source: :game
+
   def password
     @password ||= BCrypt::Password.new(password_hash);
   end
