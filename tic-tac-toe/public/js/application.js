@@ -1,7 +1,6 @@
 var Form = {
   submitForm: function(e){
     e.preventDefault();
-    console.log('Im firing')
     var data = $(this).serialize();
     // Bind this so I can still access the form that got the request
     Form.sendFormToServer.bind(this)(data);
@@ -14,7 +13,6 @@ var Form = {
       data: data
     })
     .done(function(response) {
-      console.log('Firing')
       if (response.redirect){
         window.location.replace(response.url);
       };

@@ -5,9 +5,9 @@ post '/sessions' do
     if request.xhr?
       session[:user_id] = user.id
       content_type :json
-      { redirect: true, url: '/games' }.to_json
+      { redirect: true, url: '/lobbies' }.to_json
     else
-      redirect '/games'
+      redirect '/lobbies'
     end
   else
     @errors = ['Invalid Username or Password']

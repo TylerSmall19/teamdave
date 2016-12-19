@@ -16,9 +16,9 @@ post '/users' do
       # It's set implicitly, I know. I just want the practice with status codes.
       status 200
       content_type :json
-      { redirect: true, url: '/games' }.to_json
+      { redirect: true, url: '/lobbies' }.to_json
     else
-      redirect '/games'
+      redirect '/lobbies'
     end
   else
     @errors = user.errors.full_messages
