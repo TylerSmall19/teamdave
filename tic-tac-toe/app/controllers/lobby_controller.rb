@@ -54,6 +54,11 @@ post '/lobbies' do
       end
     else
       status 422
+      if request.xhr?
+        erb :'/lobbies/new', layout: false
+      else
+
+      end
     end
   end
 end
