@@ -56,7 +56,4 @@ $(document).ready(function() {
   // This listener handles form drop down and submission
   $formCatcher.on('click', '#get-form', Form.getForm)
   .on('submit', '#new', Form.submitForm);
-
-  // Game listener. Will eventually be wrapped as an object.
-  $('#game-board').on('click', '.cell', placePieceOnBoard);
 });
