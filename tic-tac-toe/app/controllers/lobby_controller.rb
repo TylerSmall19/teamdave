@@ -3,8 +3,13 @@ get '/lobbies' do
   erb :'/lobbies/index'
 end
 
-# Previous I had it as /lobbies/:id/games/:game_id, but I think this is better
-get '/lobbies/:id/game' do
+get '/lobbies/:id' do
+  lobby = Lobby.find_by(id: params[:id])
+
+end
+
+get '/lobbies/:id/games/:game_id' do
+
   lobby = Lobby.find_by(id: params[:id])
 
   if lobby && session[:user_id]
@@ -13,4 +18,13 @@ get '/lobbies/:id/game' do
   else
     redirect '/'
   end
+end
+
+post '/lobbies' do
+  lobby = Lobby.create(
+    owner_id: session[:user_id],
+    name: params[:name]
+  )
+
+  redirect "/lobbies/#{lobby.id}"
 end

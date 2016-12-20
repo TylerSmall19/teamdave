@@ -1,5 +1,7 @@
-<%= @game.lobby.name %>
 <div class='game-wrapper'>
+  <h2 class='game-title'>
+    <%= @game.lobby.name %>
+  </h2>
   <table id='game-board'>
     <% 3.times do %>
       <tr>
