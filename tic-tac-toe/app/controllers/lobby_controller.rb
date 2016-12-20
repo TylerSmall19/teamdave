@@ -33,6 +33,16 @@ get '/lobbies/:id/games/:game_id' do
   end
 end
 
+put '/lobbies/:id/games/:game_id' do
+  if request.xhr?
+    Game.find_by(id: params[:game_id])
+    .winner_id = params[:winner][:id]
+
+    content_type :json
+    { winner_name: winner.name }.to_json
+  end
+end
+
 post '/lobbies' do
   if logged_in? && current_user
     lobby = Lobby.new(
@@ -41,7 +51,8 @@ post '/lobbies' do
     )
 
     if lobby.save
-      Game.create(lobby: lobby)
+      game = Game.create(lobby: lobby)
+      # round = game.rounds.create(player: current_user, )
       url = "/lobbies/#{lobby.id}/games/#{lobby.game.id}"
 
       session[:active_game_id] = lobby.game.id
