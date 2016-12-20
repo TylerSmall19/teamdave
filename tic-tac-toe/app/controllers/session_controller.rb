@@ -27,3 +27,8 @@ get '/sessions/new' do
     erb :'/sessions/_new'
   end
 end
+
+get '/sessions/:id/logout' do
+  session[:user_id] = nil
+  redirect '/'
+end
