@@ -5,8 +5,6 @@ class CreateUsers < ActiveRecord::Migration
       t.string :password_hash, null: false
       t.string :email, null: false
 
-      t.integer :active_game_id
-
       t.timestamps(null: false)
     end
   end

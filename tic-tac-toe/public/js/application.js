@@ -53,13 +53,10 @@ $(document).ready(function() {
   // Should this be written as 'div#form-catcher' if there's only one form-catcher on the page?
   var $formCatcher = $('#form-catcher');
 
-  // This listener handles login and registration forms (one posts to sessions/new the other users/new)
+  // This listener handles form drop down and submission
   $formCatcher.on('click', '#get-form', Form.getForm)
   .on('submit', '#new', Form.submitForm);
 
-  $('.container').on('click', '.lobby-link', );
-
+  // Game listener. Will eventually be wrapped as an object.
   $('#game-board').on('click', '.cell', placePieceOnBoard);
-
-
 });

@@ -1,36 +1,59 @@
 get '/lobbies' do
-  @lobbies = Lobby.all
-  erb :'/lobbies/index'
+  session[:active_game_id] = nil
+  authorized do
+    @lobbies = Lobby.all
+    erb :'/lobbies/index'
+  end
+end
+
+get '/lobbies/new' do
+  if request.xhr?
+    erb :'/lobbies/_new', layout: false
+  end
 end
 
 get '/lobbies/:id' do
-  @lobby = Lobby.find_by(id: params[:id])
-  erb :'/lobbies/_show'
+  authorized do
+    @lobby = Lobby.find_by(id: params[:id])
+
+    erb :'/lobbies/_show'
+  end
 end
 
 get '/lobbies/:id/games/:game_id' do
 
   lobby = Lobby.find_by(id: params[:id])
+  session[:active_game_id] = lobby.game.id
 
-  if lobby && logged_in?
-    @game = lobby.game
-    erb :'/games/show'
-  else
-    redirect '/'
+  if lobby
+    authorized do
+      @game = lobby.game
+      erb :'/games/show'
+    end
   end
 end
 
 post '/lobbies' do
   if logged_in? && current_user
-    lobby = Lobby.create(
-      owner_id: session[:user_id],
+    lobby = Lobby.new(
+      owner: current_user,
       name: params[:name]
     )
 
-    lobby.game = Game.create
+    if lobby.save
+      Game.create(lobby: lobby)
+      url = "/lobbies/#{lobby.id}/games/#{lobby.game.id}"
 
-    user = User.find_by
+      session[:active_game_id] = lobby.game.id
 
-    redirect "/lobbies/#{lobby.id}/games/#{game.id}"
+      if request.xhr?
+        content_type :json
+        {redirect: true, url: url}.to_json
+      else
+        redirect url
+      end
+    else
+      status 422
+    end
   end
 end

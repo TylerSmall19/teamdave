@@ -15,7 +15,6 @@
       <% if logged_in? %>
         <!-- I know this isn't restful, I just really prefer links to logout and I want it to work w/o AJAX -->
         | <a href='/sessions/<%= current_user.id %>/logout'>Log Out</a>
-      <% else %>
       <% end %>
     </nav>
   </header>
