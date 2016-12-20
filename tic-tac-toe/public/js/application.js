@@ -54,11 +54,12 @@ $(document).ready(function() {
   var $formCatcher = $('#form-catcher');
 
   // This listener handles login and registration forms (one posts to sessions/new the other users/new)
-  $formCatcher.on('submit', '#new', Form.submitForm)
-  // I realized as I was writing this I didn't need the AJAX here if I just load them in on startup with display: none,
-  // but I sort of like the idea of not polluting the DOM with forms.
-  .on('click', '#get-form', Form.getForm);
+  $formCatcher.on('click', '#get-form', Form.getForm)
+  .on('submit', '#new', Form.submitForm);
 
-  $('#game-board').on('click', '.cell', placePieceOnBoard)
+  $('.container').on('click', '.lobby-link', );
+
+  $('#game-board').on('click', '.cell', placePieceOnBoard);
+
+
 });
-
