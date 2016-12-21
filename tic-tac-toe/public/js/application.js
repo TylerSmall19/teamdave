@@ -56,4 +56,19 @@ $(document).ready(function() {
   // This listener handles form drop down and submission
   $formCatcher.on('click', '#get-form', Form.getForm)
   .on('submit', '#new', Form.submitForm);
+
+  $('.game-link').on('click', function(e){
+    e.preventDefault();
+
+    $.ajax({
+      url: this.href,
+      type: 'POST'
+    })
+    .done(function(responseObj) {
+      console.log(responseObj);
+      if (responseObj.redirect) {
+        window.location.replace(responseObj.url)
+      }
+    });
+  })
 });

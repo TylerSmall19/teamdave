@@ -15,35 +15,13 @@ end
 get '/lobbies/:id' do
   authorized do
     @lobby = Lobby.find_by(id: params[:id])
-
     erb :'/lobbies/_show'
   end
 end
 
-get '/lobbies/:id/games/:game_id' do
-
-  lobby = Lobby.find_by(id: params[:id])
-  session[:active_game_id] = lobby.game.id
-
-  if lobby
-    authorized do
-      @game = lobby.game
-      erb :'/games/show'
-    end
-  end
-end
-
-put '/lobbies/:id/games/:game_id' do
-  if request.xhr?
-    Game.find_by(id: params[:game_id])
-    .winner_id = params[:winner][:id]
-
-    content_type :json
-    { winner_name: winner.name }.to_json
-  end
-end
-
 post '/lobbies' do
+  # Roles of the lobby here include creating the
+  # game and starting a round
   if logged_in? && current_user
     lobby = Lobby.new(
       owner: current_user,
@@ -52,8 +30,8 @@ post '/lobbies' do
 
     if lobby.save
       game = Game.create(lobby: lobby)
-      # round = game.rounds.create(player: current_user, )
-      url = "/lobbies/#{lobby.id}/games/#{lobby.game.id}"
+      round = game.rounds.create(player: current_user)
+      url = "/rounds/#{round.id}"
 
       session[:active_game_id] = lobby.game.id
 
@@ -67,8 +45,6 @@ post '/lobbies' do
       status 422
       if request.xhr?
         erb :'/lobbies/new', layout: false
-      else
-
       end
     end
   end
