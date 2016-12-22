@@ -6,4 +6,12 @@ helpers do
   def logged_in?
     current_user != nil
   end
+
+  def authorized(route = '/')
+    if logged_in? && current_user
+      yield
+    else
+      redirect route
+    end
+  end
 end

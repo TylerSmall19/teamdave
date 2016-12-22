@@ -1,3 +1,7 @@
 get '/' do
-  erb :'/index'
+  if logged_in?
+    redirect '/lobbies'
+  else
+    erb :'/index'
+  end
 end

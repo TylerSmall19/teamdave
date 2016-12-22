@@ -1,12 +1,30 @@
-<%= @game.lobby.name %>
+
 <div class='game-wrapper'>
+  <h2 class='game-title'>
+    <%= @game.lobby.name %>
+  </h2>
+  <!-- The logic in here is a bit messy. Overall -->
+  <!-- I think it's acceptable though. Am I wrong? -->
   <table id='game-board'>
-    <% 3.times do %>
+    <% 3.times do |row| %>
       <tr>
-        <% 3.times do %>
-          <td class='cell'></td>
+        <% 3.times do |col| %>
+          <% row_class = "cell row#{row} col#{col} " %>
+
+          <% if row == col %>
+            <% row_class << 'diag0 ' %>
+          <% end %>
+
+          <% if row + col == 2 %>
+            <% row_class << 'diag1' %>
+          <% end %>
+
+          <td class="<%= row_class %>"></td>
+
         <% end %>
       </tr>
     <% end %>
   </tabe>
 </div>
+
+<script src='/js/game.js'></script>

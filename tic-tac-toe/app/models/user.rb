@@ -4,7 +4,10 @@ class User < ActiveRecord::Base
 
   has_many :lobbies, foreign_key: :owner_id
 
-  has_one :active_game, through: :lobbies, source: :game
+  has_many :rounds, foreign_key: :player_id
+  has_many :games, through: :rounds
+
+  has_many :victories, class_name: 'Round', foreign_key: :winner_id
 
   def password
     @password ||= BCrypt::Password.new(password_hash);

@@ -1,5 +1,3 @@
-<div class='game-lobby'>
-  <a href='lobbies/<%= lobby.id %>/game' class='lobby-link'>
-    Play <%= lobby.owner.username.capitalize %> in Tic Tac Toe!
-  </a>
-</div>
+<h1> Lobby for <%= current_user.username.capitalize %>! </h1>
+
+<a href='/rounds/games/<%= @lobby.game.id %>' class='game-link'>Play The Game</a>

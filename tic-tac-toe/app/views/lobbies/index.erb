@@ -1,9 +1,14 @@
+
+<div id='form-catcher'>
+  <p><a href='/lobbies/new' id='get-form'>Create A New Lobby</a></p>
+</div>
+
 <% if @lobbies %>
   <% @lobbies.each do |lobby| %>
 
     <!-- Would this be the right name for this? -->
     <%=
-    erb :'/lobbies/_show',
+    erb :'/lobbies/_link_show',
             locals: { lobby: lobby }
     %>
 

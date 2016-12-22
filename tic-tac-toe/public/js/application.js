@@ -38,14 +38,37 @@ var Form = {
   }
 }
 
+function Board (){
+  this.init = function(){
+
+  }
+}
+
+function placePieceOnBoard (e) {
+  var activePlayer = { piece: 'X' }
+  $(this).html(activePlayer.piece);
+}
+
 $(document).ready(function() {
   // Should this be written as 'div#form-catcher' if there's only one form-catcher on the page?
   var $formCatcher = $('#form-catcher');
 
-  // This listener handles login and registration forms (one posts to sessions/new the other users/new)
-  $formCatcher.on('submit', '#new', Form.submitForm)
-  // I realized as I was writing this I didn't need the AJAX here if I just load them in on startup with display: none,
-  // But I sort of like the idea of not polluting the DOM with forms.
-  .on('click', '#get-form', Form.getForm);
-});
+  // This listener handles form drop down and submission
+  $formCatcher.on('click', '#get-form', Form.getForm)
+  .on('submit', '#new', Form.submitForm);
 
+  $('.game-link').on('click', function(e){
+    e.preventDefault();
+
+    $.ajax({
+      url: this.href,
+      type: 'POST'
+    })
+    .done(function(responseObj) {
+      console.log(responseObj);
+      if (responseObj.redirect) {
+        window.location.replace(responseObj.url)
+      }
+    });
+  })
+});
